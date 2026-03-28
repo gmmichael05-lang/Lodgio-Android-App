@@ -52,17 +52,23 @@ The application consumes JSON-based endpoints through **Retrofit2**. It utilizes
   }
 
   Login Screeshot
-  <img width="1080" height="2220" alt="login" src="https://github.com/user-attachments/assets/0ac9cf00-7872-47a2-bc66-b91556104bb0" />
+  <img width="1080" height="2220" alt="login" src="https://github.com/user-attachments/assets/d27752f3-7175-4d8e-9c42-2a180d56437c" />
+
   Register ScreenShot
-  <img width="1080" height="2220" alt="register" src="https://github.com/user-attachments/assets/e94390c9-c9ef-465c-987d-4213aa4c105e" />
+  <img width="1080" height="2220" alt="register" src="https://github.com/user-attachments/assets/51dcbd98-18a6-4fab-8bbe-106d5ed99685" />
+
   GuestProfile ScreenShot
-  <img width="1080" height="2220" alt="guestprofile" src="https://github.com/user-attachments/assets/279353d2-f14b-4408-8792-bd3552ff09b5" />
+ <img width="1080" height="2220" alt="guestprofile" src="https://github.com/user-attachments/assets/f9013c1b-d72a-4a73-873a-dfd2cd208fe3" />
+
   GuestDashboard ScreenShot
-  <img width="1080" height="2220" alt="guestdashboard" src="https://github.com/user-attachments/assets/5cd9c10f-d3d7-4d9b-b3e4-8ca1ff73e095" />
+ <img width="1080" height="2220" alt="guestdashboard" src="https://github.com/user-attachments/assets/59380dcb-df5c-4cc9-884e-ff892c584132" />
+
   UpdateProfile ScreenShot
-  <img width="1080" height="2220" alt="updateprofile" src="https://github.com/user-attachments/assets/c86e1d91-0c07-4515-b04c-f29163a09141" />
+  <img width="1080" height="2220" alt="updateprofile" src="https://github.com/user-attachments/assets/75a4c3b5-4d0b-4187-8ee8-ff89ce1e8272" />
+
   ChangePassword ScreenShot
-  <img width="1080" height="2220" alt="changepassword" src="https://github.com/user-attachments/assets/e815cf3c-1355-42ba-a138-caa1f1cb6c5c" />
+  <img width="1080" height="2220" alt="changepassword" src="https://github.com/user-attachments/assets/411098e7-7f1e-4d6d-8498-40f7b0ab0b65" />
+  
 
 
 
