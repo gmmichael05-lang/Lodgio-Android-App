@@ -2,15 +2,15 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
         <shape android:shape="rectangle">
-            <solid android:color="#E3F2FD" />
-            <corners android:radius="8dp" />
-            <stroke android:width="2dp" android:color="#0091EA" />
+            <solid android:color="@color/lodgio_primary_surface" />
+            <corners android:radius="@dimen/radius_sm" />
+            <stroke android:width="1.5dp" android:color="@color/lodgio_primary" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <solid android:color="@android:color/transparent" />
-            <corners android:radius="8dp" />
+            <corners android:radius="@dimen/radius_sm" />
         </shape>
     </item>
 </selector>

@@ -10,81 +10,94 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Hero Section -->
+        <!-- ═══ Hero Section ═══ -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="280dp">
+            android:layout_height="300dp">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#1A1A2E" />
+                android:background="@drawable/bg_gradient_dark" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:gravity="bottom"
-                android:padding="24dp">
+                android:paddingHorizontal="@dimen/spacing_xl"
+                android:paddingBottom="@dimen/spacing_4xl">
 
-                <TextView
+                <!-- Logo Badge -->
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LODGIO"
-                    android:textColor="@color/lodgio_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.15"
-                    android:layout_marginBottom="16dp" />
+                    android:background="@drawable/btn_primary_bg"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:paddingVertical="@dimen/spacing_xs"
+                    android:layout_marginBottom="@dimen/spacing_lg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LODGIO"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.2" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Welcome\nback"
                     android:textColor="@color/white"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/text_display"
                     android:textStyle="bold"
                     android:lineSpacingExtra="4dp"
-                    android:layout_marginBottom="8dp" />
+                    android:letterSpacing="-0.02"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign in to access your bookings and\nmanage your listings."
-                    android:textColor="#B0BEC5"
-                    android:textSize="14sp"
-                    android:lineSpacingExtra="2dp" />
+                    android:text="Sign in to access your bookings and manage your listings."
+                    android:textColor="@color/lodgio_text_on_dark"
+                    android:textSize="@dimen/text_body_sm"
+                    android:lineSpacingExtra="3dp"
+                    android:alpha="0.8" />
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Sign In Card -->
+        <!-- ═══ Sign In Card ═══ -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_background"
             android:orientation="vertical"
-            android:padding="28dp"
+            android:paddingHorizontal="@dimen/spacing_xl"
+            android:paddingTop="@dimen/spacing_2xl"
+            android:paddingBottom="@dimen/spacing_xl"
             android:layout_marginTop="-24dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:elevation="8dp">
+            android:elevation="@dimen/elevation_lg">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign in"
                 android:textColor="@color/lodgio_text_primary"
-                android:textSize="24sp"
+                android:textSize="@dimen/text_headline"
                 android:textStyle="bold"
+                android:letterSpacing="-0.02"
                 android:layout_marginBottom="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter your details to continue"
+                android:text="Enter your credentials to continue"
                 android:textColor="@color/lodgio_text_secondary"
-                android:textSize="14sp"
-                android:layout_marginBottom="28dp" />
+                android:textSize="@dimen/text_body_sm"
+                android:layout_marginBottom="@dimen/spacing_xl" />
 
             <!-- Email Label -->
             <TextView
@@ -92,23 +105,22 @@
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textColor="@color/lodgio_text_primary"
-                android:textSize="13sp"
+                android:textSize="@dimen/text_body_sm"
                 android:textStyle="bold"
-                android:layout_marginBottom="6dp" />
+                android:layout_marginBottom="@dimen/spacing_sm" />
 
             <EditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/input_height"
                 android:background="@drawable/input_background"
                 android:hint="you@example.com"
                 android:textColorHint="@color/lodgio_text_hint"
                 android:textColor="@color/lodgio_text_primary"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_body"
                 android:inputType="textEmailAddress"
-                android:drawableStart="@android:drawable/sym_action_email"
-                android:drawablePadding="12dp"
-                android:layout_marginBottom="20dp" />
+                android:singleLine="true"
+                android:layout_marginBottom="@dimen/spacing_base" />
 
             <!-- Password Label -->
             <TextView
@@ -116,35 +128,35 @@
                 android:layout_height="wrap_content"
                 android:text="Password"
                 android:textColor="@color/lodgio_text_primary"
-                android:textSize="13sp"
+                android:textSize="@dimen/text_body_sm"
                 android:textStyle="bold"
-                android:layout_marginBottom="6dp" />
+                android:layout_marginBottom="@dimen/spacing_sm" />
 
             <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/input_height"
                 android:background="@drawable/input_background"
                 android:hint="Enter your password"
                 android:textColorHint="@color/lodgio_text_hint"
                 android:textColor="@color/lodgio_text_primary"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_body"
                 android:inputType="textPassword"
-                android:drawableStart="@android:drawable/ic_lock_idle_lock"
-                android:drawablePadding="12dp"
-                android:layout_marginBottom="28dp" />
+                android:singleLine="true"
+                android:layout_marginBottom="@dimen/spacing_xl" />
 
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="@dimen/btn_height"
                 android:background="@drawable/btn_primary_bg"
                 android:text="Continue"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_subtitle"
                 android:textAllCaps="false"
                 android:textStyle="bold"
-                android:layout_marginBottom="20dp" />
+                android:letterSpacing="0.02"
+                android:layout_marginBottom="@dimen/spacing_base" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -152,7 +164,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginVertical="@dimen/spacing_base" />
 
             <TextView
                 android:id="@+id/btnGoToRegister"
@@ -162,7 +181,8 @@
                 android:text="Don't have an account? Sign up"
                 android:textColor="@color/lodgio_primary"
                 android:textSize="14sp"
-                android:padding="8dp"
+                android:textStyle="bold"
+                android:padding="@dimen/spacing_sm"
                 android:clickable="true"
                 android:focusable="true" />
 

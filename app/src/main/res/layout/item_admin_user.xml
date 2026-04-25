@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_md"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    android:elevation="@dimen/elevation_sm">
+
+    <!-- Avatar -->
+    <TextView
+        android:id="@+id/tvUserInitial"
+        android:layout_width="@dimen/avatar_sm"
+        android:layout_height="@dimen/avatar_sm"
+        android:background="@drawable/avatar_circle"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="?" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/spacing_md">
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold"
+            android:textColor="@color/lodgio_text_primary" />
+
+        <TextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body_sm"
+            android:textColor="@color/lodgio_text_secondary"
+            android:layout_marginTop="1dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvUserRole"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/badge_guest"
+        android:paddingHorizontal="@dimen/spacing_sm"
+        android:paddingVertical="3dp"
+        android:textSize="@dimen/text_caption"
+        android:textStyle="bold"
+        android:textColor="@color/lodgio_guest_badge"
+        android:layout_marginEnd="@dimen/spacing_sm" />
+
+    <ImageView
+        android:id="@+id/btnDeleteUser"
+        android:layout_width="@dimen/icon_lg"
+        android:layout_height="@dimen/icon_lg"
+        android:src="@drawable/ic_delete"
+        android:contentDescription="Delete"
+        android:padding="@dimen/spacing_xs" />
+</LinearLayout>

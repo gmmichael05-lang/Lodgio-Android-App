@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lodgio_bg">
+
+    <!-- ═══ Premium Toolbar ═══ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/bg_gradient_primary"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/spacing_base"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LODGIO"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_title"
+                android:textStyle="bold"
+                android:letterSpacing="0.08" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnProfile"
+            android:layout_width="@dimen/avatar_sm"
+            android:layout_height="@dimen/avatar_sm"
+            android:src="@drawable/ic_profile"
+            android:background="@drawable/avatar_circle"
+            android:contentDescription="Profile"
+            android:padding="6dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_base">
+
+            <!-- ═══ Welcome Section ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <TextView
+                    android:id="@+id/tvWelcomeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome, Guest!"
+                    android:textSize="@dimen/text_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:letterSpacing="-0.02"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Discover amazing places to stay"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_text_secondary" />
+            </LinearLayout>
+
+            <!-- ═══ Search Bar ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:orientation="horizontal"
+                android:background="@drawable/input_background"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="@dimen/spacing_xs"
+                android:layout_marginBottom="@dimen/spacing_xl">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_md"
+                    android:layout_height="@dimen/icon_md"
+                    android:src="@drawable/ic_search"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:contentDescription="Search" />
+
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:hint="Search by title, city..."
+                    android:textColorHint="@color/lodgio_text_hint"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:textSize="@dimen/text_body"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch"
+                    android:paddingStart="@dimen/spacing_sm" />
+
+                <ImageView
+                    android:id="@+id/btnSearch"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/btn_primary_bg"
+                    android:src="@drawable/ic_search"
+                    android:contentDescription="Search"
+                    android:padding="@dimen/spacing_sm"
+                    android:layout_marginEnd="2dp" />
+            </LinearLayout>
+
+            <!-- ═══ Available Listings Header ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Available Listings"
+                    style="@style/LodgioSectionHeader" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Browse all"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:layout_marginVertical="@dimen/spacing_2xl" />
+
+            <TextView
+                android:id="@+id/tvEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No listings found."
+                android:textAlignment="center"
+                android:textColor="@color/lodgio_text_secondary"
+                android:textSize="@dimen/text_body"
+                android:visibility="gone"
+                android:padding="@dimen/spacing_2xl" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <!-- ═══ My Trips Section ═══ -->
+            <LinearLayout
+                android:id="@+id/llTripsSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lodgio_divider"
+                    android:layout_marginBottom="@dimen/spacing_lg" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Trips"
+                    style="@style/LodgioSectionHeader"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <LinearLayout
+                    android:id="@+id/llTripsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

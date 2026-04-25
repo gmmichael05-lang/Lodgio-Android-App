@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background"
+    android:orientation="horizontal"
+    android:padding="@dimen/spacing_base"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    android:elevation="@dimen/elevation_sm">
+
+    <!-- Property Icon -->
+    <ImageView
+        android:layout_width="@dimen/avatar_md"
+        android:layout_height="@dimen/avatar_md"
+        android:src="@drawable/ic_property"
+        android:background="@color/lodgio_bg_surface"
+        android:padding="@dimen/spacing_sm"
+        android:contentDescription="Listing" />
+
+    <!-- Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/spacing_md">
+
+        <TextView
+            android:id="@+id/tvListingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold"
+            android:textColor="@color/lodgio_text_primary"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvListingType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body_sm"
+            android:textColor="@color/lodgio_text_secondary"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvListingPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body"
+            android:textStyle="bold"
+            android:textColor="@color/lodgio_primary"
+            android:layout_marginTop="@dimen/spacing_xs" />
+    </LinearLayout>
+
+    <!-- Delete Button -->
+    <ImageView
+        android:id="@+id/btnDeleteListing"
+        android:layout_width="@dimen/icon_lg"
+        android:layout_height="@dimen/icon_lg"
+        android:src="@drawable/ic_delete"
+        android:contentDescription="Delete"
+        android:padding="@dimen/spacing_xs" />
+</LinearLayout>

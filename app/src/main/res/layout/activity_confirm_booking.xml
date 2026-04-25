@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lodgio_bg">
+
+    <!-- ═══ Premium Toolbar ═══ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/bg_gradient_primary"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/spacing_base"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/icon_lg"
+            android:layout_height="@dimen/icon_lg"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Back"
+            android:padding="@dimen/spacing_xs" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Confirm Booking"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/spacing_md" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_base">
+
+            <!-- Listing Summary Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_sm"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <TextView
+                    android:id="@+id/tvListingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_title"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <TextView
+                    android:id="@+id/tvListingCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_text_secondary"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <TextView
+                    android:id="@+id/tvPricePerNight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_subtitle"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_primary" />
+            </LinearLayout>
+
+            <!-- Trip Details Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_sm"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trip Details"
+                    style="@style/LodgioSectionHeader"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="@dimen/spacing_sm">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Check-in" android:textColor="@color/lodgio_text_hint" android:textSize="@dimen/text_body_sm" />
+                    <TextView android:id="@+id/tvCheckIn" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textStyle="bold" android:textSize="@dimen/text_body_sm" android:textColor="@color/lodgio_text_primary" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="@dimen/spacing_sm">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Check-out" android:textColor="@color/lodgio_text_hint" android:textSize="@dimen/text_body_sm" />
+                    <TextView android:id="@+id/tvCheckOut" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textStyle="bold" android:textSize="@dimen/text_body_sm" android:textColor="@color/lodgio_text_primary" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="@dimen/spacing_sm">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Guests" android:textColor="@color/lodgio_text_hint" android:textSize="@dimen/text_body_sm" />
+                    <TextView android:id="@+id/tvGuests" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textStyle="bold" android:textSize="@dimen/text_body_sm" android:textColor="@color/lodgio_text_primary" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="@dimen/spacing_sm">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Nights" android:textColor="@color/lodgio_text_hint" android:textSize="@dimen/text_body_sm" />
+                    <TextView android:id="@+id/tvNights" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textStyle="bold" android:textSize="@dimen/text_body_sm" android:textColor="@color/lodgio_text_primary" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="@color/lodgio_divider" android:layout_marginVertical="@dimen/spacing_sm" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Total" android:textStyle="bold" android:textSize="@dimen/text_title"
+                        android:textColor="@color/lodgio_text_primary" />
+                    <TextView android:id="@+id/tvTotal" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textStyle="bold" android:textSize="@dimen/text_title" android:textColor="@color/lodgio_primary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Guest Info Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_sm"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Info"
+                    style="@style/LodgioSectionHeader"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <TextView
+                    android:id="@+id/tvGuestName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <TextView
+                    android:id="@+id/tvGuestPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_text_secondary" />
+            </LinearLayout>
+
+            <!-- Message -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Message to Host (optional)"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_body_sm"
+                android:textColor="@color/lodgio_text_primary"
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/input_background"
+                android:hint="Any special requests?"
+                android:textColorHint="@color/lodgio_text_hint"
+                android:textColor="@color/lodgio_text_primary"
+                android:gravity="top"
+                android:textSize="14sp"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <Button
+                android:id="@+id/btnProceedToPayment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/btn_height"
+                android:background="@drawable/btn_primary_bg"
+                android:text="Proceed to Payment"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_subtitle"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

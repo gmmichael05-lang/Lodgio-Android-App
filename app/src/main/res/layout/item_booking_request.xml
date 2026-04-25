@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_background"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_base"
+    android:layout_marginBottom="@dimen/spacing_sm"
+    android:elevation="@dimen/elevation_sm">
+
+    <!-- Title & Price Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/spacing_sm">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBookingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_subtitle"
+                android:textStyle="bold"
+                android:textColor="@color/lodgio_text_primary"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/tvBookingGuest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_body_sm"
+                android:textColor="@color/lodgio_text_secondary" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvBookingPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_subtitle"
+            android:textStyle="bold"
+            android:textColor="@color/lodgio_primary" />
+    </LinearLayout>
+
+    <!-- Dates -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lodgio_bg_surface"
+        android:padding="@dimen/spacing_sm"
+        android:layout_marginBottom="@dimen/spacing_sm">
+
+        <TextView
+            android:id="@+id/tvBookingDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_body_sm"
+            android:textColor="@color/lodgio_text_secondary" />
+    </LinearLayout>
+
+    <!-- Message (optional) -->
+    <TextView
+        android:id="@+id/tvBookingMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_body_sm"
+        android:textColor="@color/lodgio_text_secondary"
+        android:textStyle="italic"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/spacing_sm" />
+
+    <!-- Status Badge -->
+    <TextView
+        android:id="@+id/tvBookingStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/badge_guest"
+        android:paddingHorizontal="@dimen/spacing_md"
+        android:paddingVertical="@dimen/spacing_xs"
+        android:textSize="@dimen/text_caption"
+        android:textStyle="bold"
+        android:textColor="@color/lodgio_guest_badge"
+        android:layout_marginBottom="@dimen/spacing_sm" />
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/spacing_xs">
+
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_success_bg"
+            android:text="Accept"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_body_sm"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/spacing_sm" />
+
+        <Button
+            android:id="@+id/btnReject"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_danger_bg"
+            android:text="Reject"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_body_sm"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".LodgioApp"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,9 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestApplication"
         tools:targetApi="31">
-        
+
+        <!-- ═══ Auth Feature ═══ -->
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".features.auth.view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,25 +28,53 @@
         </activity>
 
         <activity
-            android:name=".ui.RegisterActivity"
+            android:name=".features.auth.view.RegisterActivity"
             android:exported="false" />
-            
+
+        <!-- ═══ Listing Feature ═══ -->
         <activity
-            android:name=".ui.DashboardActivity"
+            android:name=".features.listing.view.GuestDashboardActivity"
             android:exported="false" />
-            
+
         <activity
-            android:name=".ui.ProfileActivity"
+            android:name=".features.listing.view.HostDashboardActivity"
             android:exported="false" />
-            
+
         <activity
-            android:name=".ui.UpdateProfileActivity"
+            android:name=".features.listing.view.ListingDetailActivity"
             android:exported="false" />
-            
+
         <activity
-            android:name=".ui.ChangePasswordActivity"
+            android:name=".features.listing.view.CreateListingActivity"
             android:exported="false" />
-            
+
+        <!-- ═══ Booking Feature ═══ -->
+        <activity
+            android:name=".features.booking.view.ConfirmBookingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".features.booking.view.CheckoutActivity"
+            android:exported="false" />
+
+        <!-- ═══ Profile Feature ═══ -->
+        <activity
+            android:name=".features.profile.view.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".features.profile.view.UpdateProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".features.profile.view.ChangePasswordActivity"
+            android:exported="false" />
+
+        <!-- ═══ Admin Feature ═══ -->
+        <activity
+            android:name=".features.admin.view.AdminDashboardActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
