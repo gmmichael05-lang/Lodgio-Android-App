@@ -44,17 +44,48 @@ class AdminDashboardActivity : AppCompatActivity(), AdminContract.View {
     override fun showUsers(users: List<JsonObject>) {
         llUsers.removeAllViews()
         findViewById<TextView>(R.id.tvUserCount).text = "${users.size} users"
+
+        // Populate stats
+        val guests = users.count { it.get("role")?.asString == "GUEST" }
+        val hosts = users.count { it.get("role")?.asString == "HOST" }
+        findViewById<TextView>(R.id.tvStatUsers).text = "${users.size}"
+        findViewById<TextView>(R.id.tvStatGuests).text = "$guests"
+        findViewById<TextView>(R.id.tvStatHosts).text = "$hosts"
+
         users.forEach { user ->
             val v = layoutInflater.inflate(R.layout.item_admin_user, llUsers, false)
-            v.findViewById<TextView>(R.id.tvUserName).text = user.get("fullname")?.asString ?: "Unknown"
+            val fullname = user.get("fullname")?.asString ?: "Unknown"
+            val role = user.get("role")?.asString ?: "GUEST"
+            v.findViewById<TextView>(R.id.tvUserName).text = fullname
             v.findViewById<TextView>(R.id.tvUserEmail).text = user.get("email")?.asString ?: ""
-            v.findViewById<TextView>(R.id.tvUserRole).text = user.get("role")?.asString ?: "GUEST"
+            v.findViewById<TextView>(R.id.tvUserRole).text = role
+
+            // Avatar initial
+            val tvInitial = v.findViewById<TextView>(R.id.tvUserInitial)
+            tvInitial.text = if (fullname.isNotBlank()) fullname[0].uppercase() else "?"
+
+            // Role badge color
+            val tvRole = v.findViewById<TextView>(R.id.tvUserRole)
+            when (role) {
+                "HOST" -> {
+                    tvRole.setBackgroundResource(R.drawable.badge_host)
+                    tvRole.setTextColor(getColor(R.color.lodgio_host_badge))
+                }
+                "ADMIN" -> {
+                    tvRole.setBackgroundResource(R.drawable.badge_admin)
+                    tvRole.setTextColor(getColor(R.color.lodgio_admin_badge))
+                }
+                else -> {
+                    tvRole.setBackgroundResource(R.drawable.badge_guest)
+                    tvRole.setTextColor(getColor(R.color.lodgio_guest_badge))
+                }
+            }
 
             v.findViewById<ImageView>(R.id.btnDeleteUser).setOnClickListener {
                 val uid = user.get("id")?.asString ?: return@setOnClickListener
                 AlertDialog.Builder(this)
                     .setTitle("Delete User")
-                    .setMessage("Delete ${user.get("fullname")?.asString}?")
+                    .setMessage("Delete ${fullname}?")
                     .setPositiveButton("Delete") { _, _ -> presenter?.deleteUser(uid) }
                     .setNegativeButton("Cancel", null)
                     .show()
@@ -66,6 +97,7 @@ class AdminDashboardActivity : AppCompatActivity(), AdminContract.View {
     override fun showListings(listings: List<ListingDTO>) {
         llListings.removeAllViews()
         findViewById<TextView>(R.id.tvListingCount).text = "${listings.size} listings"
+        findViewById<TextView>(R.id.tvStatListings).text = "${listings.size}"
         listings.forEach { lst ->
             val v = layoutInflater.inflate(R.layout.item_admin_listing, llListings, false)
             v.findViewById<TextView>(R.id.tvListingTitle).text = lst.title ?: "Untitled"

@@ -58,4 +58,10 @@ object RetrofitClient {
     val adminApi: AdminApiService by lazy {
         backendRetrofit.create(AdminApiService::class.java)
     }
+
+    // ── Supabase Storage API ──
+
+    val supabaseStorageApi: SupabaseStorageApi by lazy {
+        supabaseRetrofit.create(SupabaseStorageApi::class.java)
+    }
 }

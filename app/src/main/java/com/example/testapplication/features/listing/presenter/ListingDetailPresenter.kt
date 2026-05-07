@@ -1,6 +1,7 @@
 package com.example.testapplication.features.listing.presenter
 
 import com.example.testapplication.core.network.RetrofitClient
+import com.example.testapplication.features.booking.model.BookedDateRange
 import com.example.testapplication.features.listing.ListingDetailContract
 import com.example.testapplication.features.listing.model.ListingDTO
 import retrofit2.Call
@@ -25,6 +26,19 @@ class ListingDetailPresenter(
             override fun onFailure(call: Call<ListingDTO>, t: Throwable) {
                 view?.hideLoading()
                 view?.showError("Network error: ${t.message}")
+            }
+        })
+    }
+
+    override fun loadBookedDates(listingId: String) {
+        RetrofitClient.bookingApi.getBookedDates(listingId).enqueue(object : Callback<List<BookedDateRange>> {
+            override fun onResponse(call: Call<List<BookedDateRange>>, response: Response<List<BookedDateRange>>) {
+                if (response.isSuccessful && response.body() != null) {
+                    view?.showBookedDates(response.body()!!)
+                }
+            }
+            override fun onFailure(call: Call<List<BookedDateRange>>, t: Throwable) {
+                // Silent fail — calendar blocking is optional
             }
         })
     }

@@ -29,6 +29,22 @@ interface UserApiService {
         @Body imageUrl: String
     ): Call<JsonObject>
 
+    // PUT /api/users/{id}/contacts — persist saved contact numbers
+    @PUT("api/users/{id}/contacts")
+    @Headers("Content-Type: application/json")
+    fun updateContactNumbers(
+        @Path("id") id: String,
+        @Body contacts: String
+    ): Call<JsonObject>
+
+    // PUT /api/users/{id}/cards — persist saved payment cards
+    @PUT("api/users/{id}/cards")
+    @Headers("Content-Type: application/json")
+    fun updateSavedCards(
+        @Path("id") id: String,
+        @Body cards: String
+    ): Call<JsonObject>
+
     // GET /api/users/all
     @GET("api/users/all")
     fun getAllUsers(): Call<List<JsonObject>>

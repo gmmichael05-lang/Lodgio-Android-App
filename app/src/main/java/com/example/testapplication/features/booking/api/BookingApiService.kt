@@ -1,6 +1,7 @@
 package com.example.testapplication.features.booking.api
 
 import com.example.testapplication.features.booking.model.BookingDTO
+import com.example.testapplication.features.booking.model.BookedDateRange
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.http.*
@@ -29,4 +30,8 @@ interface BookingApiService {
         @Path("id") id: String,
         @Body statusPayload: JsonObject
     ): Call<JsonObject>
+
+    // GET /api/bookings/listing/{listingId}/dates — calendar blocking
+    @GET("api/bookings/listing/{listingId}/dates")
+    fun getBookedDates(@Path("listingId") listingId: String): Call<List<BookedDateRange>>
 }

@@ -33,3 +33,13 @@ data class ListingSummary(
     val pricePerNight: Double?,
     val imageUrls: String?
 ) : Serializable
+
+/**
+ * Booked date range for calendar blocking.
+ * Matches backend GET /api/bookings/listing/{id}/dates response.
+ */
+data class BookedDateRange(
+    val checkIn: String?,
+    val checkOut: String?,
+    val status: String?
+) : Serializable

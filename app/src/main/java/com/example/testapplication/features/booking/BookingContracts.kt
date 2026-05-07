@@ -8,6 +8,7 @@ interface ConfirmBookingContract {
         fun hideLoading()
         fun showListing(listing: ListingDTO)
         fun showUserInfo(fullname: String, phone: String)
+        fun showContactNumbers(contacts: List<String>)
         fun showError(message: String)
     }
     interface Presenter {
@@ -21,11 +22,13 @@ interface CheckoutContract {
         fun showLoading()
         fun hideLoading()
         fun showListing(listing: ListingDTO)
+        fun showSavedCards(cards: List<Map<String, String>>)
         fun showError(message: String)
         fun onPaymentSuccess()
     }
     interface Presenter {
         fun loadListing(listingId: String)
+        fun loadSavedCards()
         fun confirmPayment(
             listingId: String, checkIn: String, checkOut: String,
             messageToHost: String, paymentMethod: String, totalPrice: Double

@@ -191,6 +191,33 @@
                 android:background="@color/lodgio_divider"
                 android:layout_marginBottom="@dimen/spacing_lg" />
 
+            <!-- ═══ Unavailable Dates ═══ -->
+            <TextView
+                android:id="@+id/tvBookedDatesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅 Unavailable Dates"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/llBookedDates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                android:visibility="gone" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
             <!-- ═══ Booking Card ═══ -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,7 +279,29 @@
                     android:inputType="number"
                     android:textSize="14sp"
                     android:singleLine="true"
-                    android:layout_marginBottom="@dimen/spacing_base" />
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <!-- Price Summary (shown after date selection) -->
+                <TextView
+                    android:id="@+id/tvPriceSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/lodgio_primary"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <!-- Date Conflict Warning -->
+                <TextView
+                    android:id="@+id/tvDateConflict"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/lodgio_error"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
 
                 <Button
                     android:id="@+id/btnCheckAvailability"

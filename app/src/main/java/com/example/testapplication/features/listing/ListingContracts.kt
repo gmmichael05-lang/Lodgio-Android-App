@@ -1,6 +1,7 @@
 package com.example.testapplication.features.listing
 
 import com.example.testapplication.features.booking.model.BookingDTO
+import com.example.testapplication.features.booking.model.BookedDateRange
 import com.example.testapplication.features.listing.model.ListingDTO
 
 interface GuestDashboardContract {
@@ -42,10 +43,12 @@ interface ListingDetailContract {
         fun showLoading()
         fun hideLoading()
         fun showListing(listing: ListingDTO)
+        fun showBookedDates(dates: List<BookedDateRange>)
         fun showError(message: String)
     }
     interface Presenter {
         fun loadListing(id: String)
+        fun loadBookedDates(listingId: String)
         fun onDestroy()
     }
 }

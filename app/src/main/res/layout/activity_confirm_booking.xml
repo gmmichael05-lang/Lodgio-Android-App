@@ -179,7 +179,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_body_sm"
-                    android:textColor="@color/lodgio_text_secondary" />
+                    android:textColor="@color/lodgio_text_secondary"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <!-- Contact Number Dropdown -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Number"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_text_hint"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <Spinner
+                    android:id="@+id/spContactNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_height"
+                    android:background="@drawable/input_background"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Message -->

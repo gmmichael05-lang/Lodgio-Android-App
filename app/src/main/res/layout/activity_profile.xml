@@ -62,16 +62,43 @@
                 android:elevation="@dimen/elevation_md"
                 android:layout_marginBottom="@dimen/spacing_base">
 
-                <TextView
-                    android:id="@+id/tvAvatarInitial"
+                <!-- Avatar container (relative for overlaying photo) -->
+                <FrameLayout
+                    android:id="@+id/flAvatar"
                     android:layout_width="@dimen/avatar_xl"
                     android:layout_height="@dimen/avatar_xl"
-                    android:background="@drawable/avatar_circle"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_display"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    android:layout_marginBottom="@dimen/spacing_base" />
+                    android:layout_marginBottom="@dimen/spacing_base">
+
+                    <TextView
+                        android:id="@+id/tvAvatarInitial"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/avatar_circle"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_display"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                    <!-- Profile photo (shown when uploaded) -->
+                    <ImageView
+                        android:id="@+id/ivAvatarPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:contentDescription="Profile Photo" />
+
+                    <!-- Camera icon overlay -->
+                    <ImageView
+                        android:id="@+id/btnChangePhoto"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="bottom|end"
+                        android:src="@drawable/ic_add"
+                        android:background="@drawable/avatar_circle"
+                        android:padding="6dp"
+                        android:contentDescription="Change Photo" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/tvNameInfo"
@@ -175,6 +202,92 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- ═══ Saved Contacts Card ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_sm"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="📞 Saved Contacts"
+                        style="@style/LodgioSectionHeader" />
+
+                    <Button
+                        android:id="@+id/btnAddContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/btn_outlined_bg"
+                        android:text="+ Add"
+                        android:textColor="@color/lodgio_primary"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:paddingHorizontal="@dimen/spacing_md" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llContactNumbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <!-- ═══ Saved Cards Card ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_sm"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="💳 Saved Cards"
+                        style="@style/LodgioSectionHeader" />
+
+                    <Button
+                        android:id="@+id/btnAddCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/btn_outlined_bg"
+                        android:text="+ Add"
+                        android:textColor="@color/lodgio_primary"
+                        android:textSize="12sp"
+                        android:textAllCaps="false"
+                        android:paddingHorizontal="@dimen/spacing_md" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llSavedCards"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
             <!-- ═══ Action Buttons ═══ -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,6 +320,33 @@
                     android:textSize="@dimen/text_subtitle"
                     android:textAllCaps="false"
                     android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ═══ Booking/Listing History Card ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_sm"
+                android:layout_marginBottom="@dimen/spacing_base">
+
+                <TextView
+                    android:id="@+id/tvHistoryLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📅 History"
+                    style="@style/LodgioSectionHeader"
+                    android:layout_marginBottom="@dimen/spacing_md"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/llBookingHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Logout -->

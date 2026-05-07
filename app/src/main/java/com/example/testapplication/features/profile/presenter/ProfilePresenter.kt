@@ -37,6 +37,42 @@ class ProfilePresenter(
         })
     }
 
+    override fun saveContacts(userId: String, contacts: String) {
+        view?.showLoading()
+        RetrofitClient.userApi.updateContactNumbers(userId, contacts).enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                view?.hideLoading()
+                if (response.isSuccessful) {
+                    view?.onContactsSaved()
+                } else {
+                    view?.showError("Failed to save contacts")
+                }
+            }
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                view?.hideLoading()
+                view?.showError("Network error: ${t.message}")
+            }
+        })
+    }
+
+    override fun saveCards(userId: String, cards: String) {
+        view?.showLoading()
+        RetrofitClient.userApi.updateSavedCards(userId, cards).enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                view?.hideLoading()
+                if (response.isSuccessful) {
+                    view?.onCardsSaved()
+                } else {
+                    view?.showError("Failed to save cards")
+                }
+            }
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                view?.hideLoading()
+                view?.showError("Network error: ${t.message}")
+            }
+        })
+    }
+
     override fun logout() {
         session.clear()
         view?.onLogout()

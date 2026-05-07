@@ -20,6 +20,7 @@ class CheckoutActivity : AppCompatActivity(), CheckoutContract.View {
     private var checkOut = ""
     private var totalPrice = 0.0
     private var message = ""
+    private var savedCardLabels = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +40,33 @@ class CheckoutActivity : AppCompatActivity(), CheckoutContract.View {
         findViewById<TextView>(R.id.tvDates).text = "$checkIn → $checkOut"
 
         val rgPayment = findViewById<RadioGroup>(R.id.rgPaymentMethod)
+        val spSavedCards = findViewById<Spinner>(R.id.spSavedCards)
+
+        // Toggle saved card spinner visibility based on payment method
+        rgPayment.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbSavedCard && savedCardLabels.isNotEmpty()) {
+                spSavedCards?.visible()
+            } else {
+                spSavedCards?.gone()
+            }
+        }
 
         findViewById<Button>(R.id.btnConfirmPayment).setOnClickListener {
             val paymentMethod = when (rgPayment.checkedRadioButtonId) {
                 R.id.rbGcash -> "GCash"
                 R.id.rbPaymaya -> "PayMaya"
                 R.id.rbBankTransfer -> "Bank Transfer"
+                R.id.rbSavedCard -> {
+                    val selected = spSavedCards?.selectedItem?.toString() ?: ""
+                    if (selected.isNotBlank()) "Card: $selected" else "Card"
+                }
                 else -> "GCash"
             }
             presenter?.confirmPayment(listingId, checkIn, checkOut, message, paymentMethod, totalPrice)
         }
 
         presenter?.loadListing(listingId)
+        presenter?.loadSavedCards()
     }
 
     override fun showLoading() {
@@ -65,6 +81,28 @@ class CheckoutActivity : AppCompatActivity(), CheckoutContract.View {
         findViewById<TextView>(R.id.tvListingTitle).text = listing.title
         findViewById<TextView>(R.id.tvListingCity).text = "${listing.city} · ${listing.type}"
     }
+
+    override fun showSavedCards(cards: List<Map<String, String>>) {
+        if (cards.isEmpty()) return
+        // Show the saved card radio button
+        findViewById<RadioButton>(R.id.rbSavedCard)?.visible()
+
+        savedCardLabels.clear()
+        cards.forEach { card ->
+            val num = card["number"] ?: ""
+            val brand = card["brand"] ?: ""
+            val last4 = if (num.length >= 4) num.takeLast(4) else num
+            val label = if (brand.isNotBlank()) "$brand •••• $last4" else "•••• $last4"
+            savedCardLabels.add(label)
+        }
+
+        val spSavedCards = findViewById<Spinner>(R.id.spSavedCards)
+        if (spSavedCards != null) {
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, savedCardLabels)
+            spSavedCards.adapter = adapter
+        }
+    }
+
     override fun showError(message: String) { toast(message) }
     override fun onPaymentSuccess() {
         toast("Booking confirmed! 🎉", long = true)

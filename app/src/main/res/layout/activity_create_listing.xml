@@ -198,25 +198,97 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Image URLs -->
+            <!-- Property Photos (REQUIRED) -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Image URLs (comma separated)" android:textStyle="bold"
+                android:text="Property Photos *" android:textStyle="bold"
                 android:textSize="@dimen/text_body_sm" android:textColor="@color/lodgio_text_primary"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <!-- Upload zone (tap to select) -->
+            <LinearLayout
+                android:id="@+id/llUploadZone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="@dimen/spacing_2xl"
+                android:background="@drawable/card_info_bg"
+                android:layout_marginBottom="@dimen/spacing_sm">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📷"
+                    android:textSize="28sp"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap to select photos"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="@color/lodgio_text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="JPEG, PNG • Max 5MB each"
+                    android:textSize="11sp"
+                    android:textColor="@color/lodgio_text_hint" />
+            </LinearLayout>
+
+            <!-- Image error message -->
+            <TextView
+                android:id="@+id/tvImageError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/lodgio_error"
+                android:visibility="gone"
                 android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <!-- Image previews (horizontal scroll) -->
+            <HorizontalScrollView
+                android:id="@+id/hsvImagePreviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <LinearLayout
+                    android:id="@+id/llImagePreviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <!-- Hidden fallback for URL input (kept for backward compat) -->
             <EditText android:id="@+id/etImageUrls" android:layout_width="match_parent" android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background" android:hint="https://..."
+                android:background="@drawable/input_background" android:hint="Or paste image URLs..."
                 android:textColorHint="@color/lodgio_text_hint" android:textColor="@color/lodgio_text_primary"
-                android:singleLine="true" android:textSize="14sp" android:layout_marginBottom="@dimen/spacing_md" />
+                android:singleLine="true" android:textSize="14sp" android:layout_marginBottom="@dimen/spacing_md"
+                android:visibility="gone" />
 
             <!-- Amenities -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Amenities (comma separated)" android:textStyle="bold"
+                android:text="Amenities" android:textStyle="bold"
                 android:textSize="@dimen/text_body_sm" android:textColor="@color/lodgio_text_primary"
                 android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <LinearLayout
+                android:id="@+id/llAmenityChips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
             <EditText android:id="@+id/etAmenities" android:layout_width="match_parent" android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background" android:hint="WiFi, Pool, Parking..."
+                android:background="@drawable/input_background" android:hint="Or type: WiFi, Pool..."
                 android:textColorHint="@color/lodgio_text_hint" android:textColor="@color/lodgio_text_primary"
-                android:singleLine="true" android:textSize="14sp" android:layout_marginBottom="@dimen/spacing_xl" />
+                android:singleLine="true" android:textSize="14sp" android:layout_marginBottom="@dimen/spacing_xl"
+                android:visibility="gone" />
 
             <ProgressBar android:id="@+id/progressBar" android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_gravity="center" android:visibility="gone" android:layout_marginBottom="@dimen/spacing_sm" />

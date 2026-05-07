@@ -41,6 +41,40 @@ class ConfirmBookingActivity : AppCompatActivity(), ConfirmBookingContract.View 
         findViewById<TextView>(R.id.tvGuests).text = "$guests guest(s)"
 
         findViewById<Button>(R.id.btnProceedToPayment).setOnClickListener {
+            // Validate dates
+            if (checkIn.isEmpty() || checkOut.isEmpty()) {
+                toast("Please select check-in and check-out dates.")
+                return@setOnClickListener
+            }
+            try {
+                val today = LocalDate.now()
+                val ciDate = LocalDate.parse(checkIn, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                val coDate = LocalDate.parse(checkOut, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                if (ciDate.isBefore(today)) {
+                    toast("Check-in date cannot be in the past.")
+                    return@setOnClickListener
+                }
+                if (!coDate.isAfter(ciDate)) {
+                    toast("Check-out must be after check-in.")
+                    return@setOnClickListener
+                }
+            } catch (e: Exception) {
+                toast("Invalid date format.")
+                return@setOnClickListener
+            }
+
+            // Validate guest capacity
+            val guestCount = guests.toIntOrNull() ?: 1
+            val maxGuests = currentListing?.guestCapacity ?: 99
+            if (guestCount > maxGuests) {
+                toast("Maximum $maxGuests guests allowed.")
+                return@setOnClickListener
+            }
+
+            // Get selected contact
+            val spContact = findViewById<Spinner>(R.id.spContactNumber)
+            val selectedContact = spContact?.selectedItem?.toString() ?: ""
+
             val intent = Intent(this, CheckoutActivity::class.java).apply {
                 putExtra("LISTING_ID", listingId)
                 putExtra("CHECK_IN", checkIn)
@@ -48,6 +82,7 @@ class ConfirmBookingActivity : AppCompatActivity(), ConfirmBookingContract.View 
                 putExtra("GUESTS", guests)
                 putExtra("TOTAL_PRICE", calculateTotal())
                 putExtra("MESSAGE", findViewById<EditText>(R.id.etMessage).textString())
+                putExtra("CONTACT", selectedContact)
             }
             startActivity(intent)
         }
@@ -74,6 +109,15 @@ class ConfirmBookingActivity : AppCompatActivity(), ConfirmBookingContract.View 
     override fun showUserInfo(fullname: String, phone: String) {
         findViewById<TextView>(R.id.tvGuestName).text = fullname
         findViewById<TextView>(R.id.tvGuestPhone).text = phone
+    }
+
+    override fun showContactNumbers(contacts: List<String>) {
+        val spContact = findViewById<Spinner>(R.id.spContactNumber)
+        if (spContact != null && contacts.isNotEmpty()) {
+            spContact.visible()
+            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, contacts)
+            spContact.adapter = adapter
+        }
     }
 
     override fun showError(message: String) { toast(message) }

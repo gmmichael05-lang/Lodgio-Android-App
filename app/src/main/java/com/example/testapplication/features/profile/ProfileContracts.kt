@@ -9,10 +9,14 @@ interface ProfileContract {
         fun showProfile(user: JsonObject)
         fun showError(message: String)
         fun onLogout()
+        fun onContactsSaved()
+        fun onCardsSaved()
     }
     interface Presenter {
         fun loadProfile()
         fun logout()
+        fun saveContacts(userId: String, contacts: String)
+        fun saveCards(userId: String, cards: String)
         fun onDestroy()
     }
 }

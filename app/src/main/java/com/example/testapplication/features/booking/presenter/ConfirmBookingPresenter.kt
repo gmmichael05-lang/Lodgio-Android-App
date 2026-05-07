@@ -33,10 +33,21 @@ class ConfirmBookingPresenter(
                 view?.hideLoading()
                 if (response.isSuccessful && response.body() != null) {
                     val u = response.body()!!
-                    view?.showUserInfo(
-                        u.get("fullname")?.asString ?: "",
-                        u.get("mobileNumber")?.asString ?: ""
-                    )
+                    val fullname = u.get("fullname")?.asString ?: ""
+                    val mobile = u.get("mobileNumber")?.asString ?: ""
+
+                    view?.showUserInfo(fullname, mobile)
+
+                    // Parse saved contact numbers
+                    val contactsStr = u.get("contactNumbers")?.asString ?: ""
+                    val contacts = mutableListOf<String>()
+                    if (mobile.isNotBlank()) contacts.add(mobile)
+                    if (contactsStr.isNotBlank()) {
+                        contactsStr.split(",").map { it.trim() }.filter { it.isNotBlank() && it != mobile }.forEach {
+                            contacts.add(it)
+                        }
+                    }
+                    view?.showContactNumbers(contacts)
                 }
             }
             override fun onFailure(call: Call<JsonObject>, t: Throwable) { view?.hideLoading() }
