@@ -341,12 +341,19 @@
                     android:layout_marginBottom="@dimen/spacing_md"
                     android:visibility="gone" />
 
-                <LinearLayout
-                    android:id="@+id/llBookingHistory"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone" />
+                    android:layout_height="250dp"
+                    android:background="@drawable/input_background"
+                    android:padding="@dimen/spacing_xs">
+                    
+                    <LinearLayout
+                        android:id="@+id/llBookingHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone" />
+                </androidx.core.widget.NestedScrollView>
             </LinearLayout>
 
             <!-- Logout -->

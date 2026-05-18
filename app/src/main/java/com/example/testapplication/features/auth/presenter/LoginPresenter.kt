@@ -74,9 +74,9 @@ class LoginPresenter(
                 view?.hideLoading()
                 if (response.isSuccessful && response.body() != null) {
                     val userData = response.body()!!
-                    val backendRole = userData.get("role")?.asString ?: supabaseRole
-                    val fullname = userData.get("fullname")?.asString ?: ""
-                    val backendId = userData.get("id")?.asString
+                    val backendRole = try { userData.get("role")?.let { if (it.isJsonNull) null else it.asString } } catch (_: Exception) { null } ?: supabaseRole
+                    val fullname = try { userData.get("fullname")?.let { if (it.isJsonNull) null else it.asString } } catch (_: Exception) { null } ?: ""
+                    val backendId = try { userData.get("id")?.let { if (it.isJsonNull) null else it.asString } } catch (_: Exception) { null }
 
                     sessionManager.saveRole(backendRole)
                     sessionManager.saveFullname(fullname)

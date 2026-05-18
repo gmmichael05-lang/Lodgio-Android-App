@@ -78,5 +78,34 @@ class ProfilePresenter(
         view?.onLogout()
     }
 
+    override fun submitReview(listingId: String, rating: Int, comment: String) {
+        val email = session.getEmail() ?: return
+        val name = session.getFullname() ?: "Guest"
+
+        val payload = JsonObject().apply {
+            addProperty("listingId", listingId)
+            addProperty("reviewerEmail", email)
+            addProperty("reviewerName", name)
+            addProperty("rating", rating)
+            addProperty("comment", comment)
+        }
+
+        view?.showLoading()
+        RetrofitClient.listingApi.submitReview(payload).enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                view?.hideLoading()
+                if (response.isSuccessful) {
+                    view?.onReviewSubmitted()
+                } else {
+                    view?.showError("Failed to submit review")
+                }
+            }
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                view?.hideLoading()
+                view?.showError("Network error: ${t.message}")
+            }
+        })
+    }
+
     override fun onDestroy() { view = null }
 }

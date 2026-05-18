@@ -41,6 +41,12 @@ class ConfirmBookingActivity : AppCompatActivity(), ConfirmBookingContract.View 
         findViewById<TextView>(R.id.tvGuests).text = "$guests guest(s)"
 
         findViewById<Button>(R.id.btnProceedToPayment).setOnClickListener {
+            // Ensure listing data is loaded
+            if (currentListing == null) {
+                toast("Please wait, loading listing details...")
+                return@setOnClickListener
+            }
+
             // Validate dates
             if (checkIn.isEmpty() || checkOut.isEmpty()) {
                 toast("Please select check-in and check-out dates.")
@@ -75,16 +81,20 @@ class ConfirmBookingActivity : AppCompatActivity(), ConfirmBookingContract.View 
             val spContact = findViewById<Spinner>(R.id.spContactNumber)
             val selectedContact = spContact?.selectedItem?.toString() ?: ""
 
-            val intent = Intent(this, CheckoutActivity::class.java).apply {
-                putExtra("LISTING_ID", listingId)
-                putExtra("CHECK_IN", checkIn)
-                putExtra("CHECK_OUT", checkOut)
-                putExtra("GUESTS", guests)
-                putExtra("TOTAL_PRICE", calculateTotal())
-                putExtra("MESSAGE", findViewById<EditText>(R.id.etMessage).textString())
-                putExtra("CONTACT", selectedContact)
+            try {
+                val intent = Intent(this, CheckoutActivity::class.java).apply {
+                    putExtra("LISTING_ID", listingId)
+                    putExtra("CHECK_IN", checkIn)
+                    putExtra("CHECK_OUT", checkOut)
+                    putExtra("GUESTS", guests)
+                    putExtra("TOTAL_PRICE", calculateTotal())
+                    putExtra("MESSAGE", findViewById<EditText>(R.id.etMessage).textString())
+                    putExtra("CONTACT", selectedContact)
+                }
+                startActivity(intent)
+            } catch (e: Exception) {
+                toast("Error: ${e.message}")
             }
-            startActivity(intent)
         }
 
         presenter?.loadData(listingId)

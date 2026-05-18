@@ -15,6 +15,7 @@ import com.example.testapplication.features.listing.HostDashboardContract
 import com.example.testapplication.features.listing.model.ListingDTO
 import com.example.testapplication.features.listing.presenter.HostDashboardPresenter
 import com.example.testapplication.features.profile.view.ProfileActivity
+import com.bumptech.glide.Glide
 
 class HostDashboardActivity : AppCompatActivity(), HostDashboardContract.View {
 
@@ -63,6 +64,26 @@ class HostDashboardActivity : AppCompatActivity(), HostDashboardContract.View {
             v.findViewById<TextView>(R.id.tvListingTitle).text = lst.title
             v.findViewById<TextView>(R.id.tvListingType).text = lst.type ?: "Property"
             v.findViewById<TextView>(R.id.tvListingPrice).text = "₱${String.format("%,.0f", lst.pricePerNight ?: 0.0)}/night"
+
+            val ivListingImage = v.findViewById<ImageView>(R.id.ivListingImage)
+            val imageUrls = lst.imageUrls?.split(",")?.map { it.trim() }?.filter { it.isNotBlank() } ?: emptyList()
+            if (imageUrls.isNotEmpty()) {
+                Glide.with(this)
+                    .load(imageUrls[0])
+                    .placeholder(R.drawable.ic_property)
+                    .error(R.drawable.ic_property)
+                    .centerCrop()
+                    .into(ivListingImage)
+            }
+
+            val swListingActive = v.findViewById<Switch>(R.id.swListingActive)
+            swListingActive.setOnCheckedChangeListener(null)
+            swListingActive.isChecked = lst.status == "ACTIVE"
+            swListingActive.setOnCheckedChangeListener { buttonView, _ ->
+                if (buttonView.isPressed) {
+                    presenter?.toggleListingActive(lst.id ?: "")
+                }
+            }
 
             v.findViewById<ImageView>(R.id.btnDeleteListing).setOnClickListener {
                 AlertDialog.Builder(this)
@@ -117,6 +138,7 @@ class HostDashboardActivity : AppCompatActivity(), HostDashboardContract.View {
 
     override fun showError(message: String) { toast(message) }
     override fun onListingDeleted() { toast("Listing deleted"); presenter?.loadHostData() }
+    override fun onListingToggled() { toast("Listing status updated") }
     override fun onBookingStatusUpdated() { toast("Booking updated"); presenter?.loadHostData() }
 
     override fun onResume() {

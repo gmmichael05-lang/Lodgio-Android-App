@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_lg"
+    android:background="@drawable/card_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Leave a Review"
+        android:textSize="@dimen/text_headline"
+        android:textStyle="bold"
+        android:textColor="@color/lodgio_text_primary"
+        android:layout_marginBottom="@dimen/spacing_md" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="How was your stay?"
+        android:textSize="@dimen/text_body"
+        android:textColor="@color/lodgio_text_secondary"
+        android:layout_marginBottom="@dimen/spacing_sm" />
+
+    <!-- Rating Bar -->
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="5"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/spacing_md"
+        android:progressTint="@color/lodgio_primary"
+        android:secondaryProgressTint="@color/lodgio_primary" />
+
+    <!-- Comment Input -->
+    <EditText
+        android:id="@+id/etReviewComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:background="@drawable/input_background"
+        android:hint="Share details of your own experience at this place..."
+        android:textColorHint="@color/lodgio_text_hint"
+        android:textColor="@color/lodgio_text_primary"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:padding="@dimen/spacing_sm"
+        android:layout_marginBottom="@dimen/spacing_lg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelReview"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/btn_height"
+            android:background="@drawable/btn_outlined_bg"
+            android:text="Cancel"
+            android:textColor="@color/lodgio_primary"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_marginEnd="@dimen/spacing_xs" />
+
+        <Button
+            android:id="@+id/btnSubmitReview"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/btn_height"
+            android:background="@drawable/btn_primary_bg"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:layout_marginStart="@dimen/spacing_xs" />
+    </LinearLayout>
+
+</LinearLayout>

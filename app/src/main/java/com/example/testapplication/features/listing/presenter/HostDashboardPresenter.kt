@@ -56,6 +56,17 @@ class HostDashboardPresenter(
         })
     }
 
+    override fun toggleListingActive(id: String) {
+        RetrofitClient.listingApi.toggleListingActive(id).enqueue(object : Callback<Void> {
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                view?.onListingToggled()
+            }
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                view?.showError("Failed to toggle listing status")
+            }
+        })
+    }
+
     override fun updateBookingStatus(id: String, status: String) {
         val payload = JsonObject().apply { addProperty("status", status) }
         RetrofitClient.bookingApi.updateBookingStatus(id, payload).enqueue(object : Callback<JsonObject> {

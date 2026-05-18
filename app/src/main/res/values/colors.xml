@@ -5,13 +5,35 @@
 
     <!-- ═══════════════════════════════════════════ -->
     <!-- Lodgio Premium Color System                 -->
+    <!-- Matches Web App index.css variables exactly  -->
     <!-- ═══════════════════════════════════════════ -->
 
-    <!-- Primary - Deep Ocean Blue -->
-    <color name="lodgio_primary">#1565C0</color>
-    <color name="lodgio_primary_dark">#0D47A1</color>
-    <color name="lodgio_primary_light">#42A5F5</color>
-    <color name="lodgio_primary_surface">#E3F2FD</color>
+    <!-- Brand Blue (brand colors) -->
+    <color name="lodgio_primary">#0EA5E9</color>
+    <color name="lodgio_primary_dark">#0284C7</color>
+    <color name="lodgio_primary_darker">#0369A1</color>
+    <color name="lodgio_primary_light">#38BDF8</color>
+    <color name="lodgio_primary_lighter">#7DD3FC</color>
+    <color name="lodgio_primary_surface">#E0F2FE</color>
+    <color name="lodgio_primary_surface_light">#F0F9FF</color>
+    <color name="lodgio_brand_50">#F0F9FF</color>
+    <color name="lodgio_brand_100">#E0F2FE</color>
+    <color name="lodgio_brand_200">#BAE6FD</color>
+    <color name="lodgio_brand_400">#38BDF8</color>
+    <color name="lodgio_brand_500">#0EA5E9</color>
+    <color name="lodgio_brand_600">#0284C7</color>
+    <color name="lodgio_brand_700">#0369A1</color>
+
+    <!-- Navy / Slate (navy colors) -->
+    <color name="lodgio_navy_900">#0F172A</color>
+    <color name="lodgio_navy_800">#1E293B</color>
+    <color name="lodgio_navy_700">#334155</color>
+    <color name="lodgio_navy_600">#475569</color>
+    <color name="lodgio_navy_400">#94A3B8</color>
+    <color name="lodgio_navy_300">#CBD5E1</color>
+    <color name="lodgio_navy_200">#E2E8F0</color>
+    <color name="lodgio_navy_100">#F1F5F9</color>
+    <color name="lodgio_navy_50">#F8FAFC</color>
 
     <!-- Accent - Warm Amber -->
     <color name="lodgio_accent">#FF8F00</color>
@@ -32,25 +54,33 @@
 
     <!-- Input -->
     <color name="lodgio_input_bg">#F1F5F9</color>
-    <color name="lodgio_input_stroke">#CBD5E1</color>
-    <color name="lodgio_input_focus">#1565C0</color>
+    <color name="lodgio_input_stroke">#E2E8F0</color>
+    <color name="lodgio_input_focus">#0EA5E9</color>
 
-    <!-- Semantic -->
-    <color name="lodgio_success">#059669</color>
-    <color name="lodgio_success_bg">#D1FAE5</color>
-    <color name="lodgio_error">#DC2626</color>
+    <!-- Semantic / Status -->
+    <color name="lodgio_success">#16A34A</color>
+    <color name="lodgio_success_light">#15803D</color>
+    <color name="lodgio_success_bg">#DCFCE7</color>
+    <color name="lodgio_success_bg_light">#F0FDF4</color>
+    <color name="lodgio_error">#B91C1C</color>
+    <color name="lodgio_error_light">#EF4444</color>
     <color name="lodgio_error_bg">#FEE2E2</color>
-    <color name="lodgio_warning">#D97706</color>
+    <color name="lodgio_error_bg_light">#FEF2F2</color>
+    <color name="lodgio_error_border">#FECACA</color>
+    <color name="lodgio_warning">#B45309</color>
     <color name="lodgio_warning_bg">#FEF3C7</color>
+    <color name="lodgio_warning_light">#FEF08A</color>
     <color name="lodgio_info">#0284C7</color>
+    <color name="lodgio_purple_100">#F3E8FF</color>
+    <color name="lodgio_purple_700">#7E22CE</color>
 
     <!-- Role Badge -->
-    <color name="lodgio_host_badge">#F59E0B</color>
+    <color name="lodgio_host_badge">#B45309</color>
     <color name="lodgio_host_badge_bg">#FEF3C7</color>
-    <color name="lodgio_guest_badge">#3B82F6</color>
-    <color name="lodgio_guest_badge_bg">#DBEAFE</color>
-    <color name="lodgio_admin_badge">#8B5CF6</color>
-    <color name="lodgio_admin_badge_bg">#EDE9FE</color>
+    <color name="lodgio_guest_badge">#15803D</color>
+    <color name="lodgio_guest_badge_bg">#DCFCE7</color>
+    <color name="lodgio_admin_badge">#7E22CE</color>
+    <color name="lodgio_admin_badge_bg">#F3E8FF</color>
 
     <!-- Card & Divider -->
     <color name="lodgio_card_bg">#FFFFFF</color>
@@ -58,14 +88,26 @@
     <color name="lodgio_shadow">#1A000000</color>
     <color name="lodgio_hero_overlay">#CC0F172A</color>
 
-    <!-- Gradient endpoints -->
-    <color name="lodgio_gradient_start">#0D47A1</color>
-    <color name="lodgio_gradient_mid">#1565C0</color>
-    <color name="lodgio_gradient_end">#1E88E5</color>
+    <!-- Gradient endpoints (hero) -->
+    <color name="lodgio_gradient_start">#0F172A</color>
+    <color name="lodgio_gradient_mid">#0C4A6E</color>
+    <color name="lodgio_gradient_end">#0369A1</color>
 
     <!-- Star / Rating -->
     <color name="lodgio_star">#FBBF24</color>
+    <color name="lodgio_star_empty">#CBD5E1</color>
+
+    <!-- Heart / Favorite -->
+    <color name="lodgio_heart">#EF4444</color>
 
     <!-- Ripple -->
-    <color name="lodgio_ripple">#201565C0</color>
+    <color name="lodgio_ripple">#200EA5E9</color>
+
+    <!-- Shadow Blue (for button glow) -->
+    <color name="lodgio_shadow_blue">#400EA5E9</color>
+
+    <!-- Semi-transparent overlays -->
+    <color name="lodgio_overlay_dark">#A60F172A</color>
+    <color name="lodgio_overlay_light">#15FFFFFF</color>
+    <color name="lodgio_glass_bg">#E0FFFFFF</color>
 </resources>

@@ -2,8 +2,8 @@ package com.example.testapplication.core.network
 
 import android.content.Context
 import android.net.Uri
-import okhttp3.MediaType
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,8 +43,8 @@ object SupabaseUploader {
 
             // Determine MIME type
             val mimeType = context.contentResolver.getType(imageUri) ?: "image/jpeg"
-            val mediaType = MediaType.parse(mimeType)
-            val requestBody = RequestBody.create(mediaType, imageBytes)
+            val mediaType = mimeType.toMediaTypeOrNull()
+            val requestBody = imageBytes.toRequestBody(mediaType)
 
             // Upload to Supabase
             RetrofitClient.supabaseStorageApi.uploadFile(

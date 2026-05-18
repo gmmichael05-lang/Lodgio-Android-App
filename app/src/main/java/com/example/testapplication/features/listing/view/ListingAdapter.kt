@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.testapplication.R
 import com.example.testapplication.features.listing.model.ListingDTO
 
@@ -36,6 +39,7 @@ class ListingAdapter(
         private val tvPrice: TextView = itemView.findViewById(R.id.tvListingPrice)
         private val tvType: TextView = itemView.findViewById(R.id.tvListingType)
         private val tvBedsBaths: TextView = itemView.findViewById(R.id.tvBedsBaths)
+        private val ivListingImage: ImageView? = itemView.findViewById(R.id.ivListingImage)
 
         fun bind(listing: ListingDTO) {
             tvTitle.text = listing.title ?: "Untitled"
@@ -46,6 +50,22 @@ class ListingAdapter(
             val bedText = if (listing.beds != null) "${listing.beds} bed${if (listing.beds != 1) "s" else ""}" else ""
             val bathText = if (listing.baths != null) "${listing.baths} bath${if (listing.baths != 1) "s" else ""}" else ""
             tvBedsBaths.text = listOf(bedText, bathText).filter { it.isNotEmpty() }.joinToString(" · ")
+
+            // Load listing image with Glide
+            if (ivListingImage != null) {
+                val imageUrl = listing.imageUrls?.split(",")?.firstOrNull()?.trim()
+                if (!imageUrl.isNullOrBlank()) {
+                    Glide.with(itemView.context)
+                        .load(imageUrl)
+                        .transform(CenterCrop(), RoundedCorners(24))
+                        .placeholder(R.drawable.bg_listing_placeholder)
+                        .error(R.drawable.bg_listing_placeholder)
+                        .into(ivListingImage)
+                    ivListingImage.visibility = View.VISIBLE
+                } else {
+                    ivListingImage.setImageResource(R.drawable.bg_listing_placeholder)
+                }
+            }
 
             itemView.setOnClickListener { onItemClick(listing) }
         }

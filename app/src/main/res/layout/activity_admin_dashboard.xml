@@ -241,12 +241,19 @@
                     android:textColor="@color/lodgio_admin_badge" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llUsers"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="@dimen/spacing_xl" />
+                android:layout_height="300dp"
+                android:layout_marginBottom="@dimen/spacing_xl"
+                android:background="@drawable/input_background"
+                android:padding="@dimen/spacing_xs">
+                
+                <LinearLayout
+                    android:id="@+id/llUsers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </androidx.core.widget.NestedScrollView>
 
             <View
                 android:layout_width="match_parent"
@@ -281,11 +288,18 @@
                     android:textColor="@color/lodgio_admin_badge" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llAdminListings"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:layout_height="300dp"
+                android:background="@drawable/input_background"
+                android:padding="@dimen/spacing_xs">
+                
+                <LinearLayout
+                    android:id="@+id/llAdminListings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
     </ScrollView>

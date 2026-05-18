@@ -37,6 +37,12 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     private var contactNumbers = mutableListOf<String>()
     private var savedCards = mutableListOf<JsonObject>()
 
+    /** Safely get a string from a JsonObject, handling JsonNull gracefully */
+    private fun JsonObject.safeString(key: String): String? {
+        val el = this.get(key) ?: return null
+        return if (el.isJsonNull) null else try { el.asString } catch (_: Exception) { null }
+    }
+
     // Gallery picker for avatar
     private val avatarPickerLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -155,35 +161,26 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
     }
 
     private fun loadProfileImage(url: String) {
-        Thread {
-            try {
-                val connection = java.net.URL(url).openConnection()
-                connection.connectTimeout = 5000
-                connection.readTimeout = 5000
-                val inputStream = connection.getInputStream()
-                val bitmap = BitmapFactory.decodeStream(inputStream)
-                inputStream.close()
-                if (bitmap != null) {
-                    runOnUiThread {
-                        ivAvatarPhoto.setImageBitmap(bitmap)
-                        ivAvatarPhoto.visible()
-                        tvAvatarInitial.gone()
-                    }
-                }
-            } catch (_: Exception) {
-                // If loading fails, keep showing the initial letter
-            }
-        }.start()
+        try {
+            com.bumptech.glide.Glide.with(this)
+                .load(url)
+                .circleCrop()
+                .into(ivAvatarPhoto)
+            ivAvatarPhoto.visible()
+            tvAvatarInitial.gone()
+        } catch (_: Exception) {
+            // If loading fails, keep showing the initial letter
+        }
     }
 
     override fun showLoading() { findViewById<ProgressBar>(R.id.progressBar).visible() }
     override fun hideLoading() { findViewById<ProgressBar>(R.id.progressBar).gone() }
 
     override fun showProfile(user: JsonObject) {
-        val name = user.get("fullname")?.asString ?: "N/A"
-        val email = user.get("email")?.asString ?: "N/A"
-        val mobile = user.get("mobileNumber")?.asString ?: "N/A"
-        val role = user.get("role")?.asString ?: "GUEST"
+        val name = user.safeString("fullname") ?: "N/A"
+        val email = user.safeString("email") ?: "N/A"
+        val mobile = user.safeString("mobileNumber") ?: "N/A"
+        val role = user.safeString("role") ?: "GUEST"
 
         tvAvatarInitial.text = if (name.isNotEmpty() && name != "N/A") name[0].uppercase() else "?"
         tvName.text = name
@@ -203,10 +200,12 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
         }
 
         // Load profile picture if available
-        val profilePicUrl = user.get("profilePictureUrl")?.asString
-        if (!profilePicUrl.isNullOrBlank()) {
-            loadProfileImage(profilePicUrl)
-        }
+        try {
+            val profilePicUrl = user.safeString("profilePictureUrl")
+            if (!profilePicUrl.isNullOrBlank()) {
+                loadProfileImage(profilePicUrl)
+            }
+        } catch (_: Exception) { }
 
         // Update detail section
         try {
@@ -214,27 +213,29 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
         } catch (_: Exception) { }
 
         // Parse and display contact numbers
-        val contactsStr = user.get("contactNumbers")?.asString ?: ""
-        contactNumbers.clear()
-        if (contactsStr.isNotBlank()) {
-            contactsStr.split(",").map { it.trim() }.filter { it.isNotBlank() }.forEach {
-                contactNumbers.add(it)
+        try {
+            val contactsStr = user.safeString("contactNumbers") ?: ""
+            contactNumbers.clear()
+            if (contactsStr.isNotBlank()) {
+                contactsStr.split(",").map { it.trim() }.filter { it.isNotBlank() }.forEach {
+                    contactNumbers.add(it)
+                }
             }
-        }
-        renderContacts()
+            renderContacts()
+        } catch (_: Exception) { renderContacts() }
 
         // Parse and display saved cards
-        val cardsStr = user.get("savedCards")?.asString ?: ""
-        savedCards.clear()
-        if (cardsStr.isNotBlank()) {
-            try {
+        try {
+            val cardsStr = user.safeString("savedCards") ?: ""
+            savedCards.clear()
+            if (cardsStr.isNotBlank()) {
                 val arr = JsonParser().parse(cardsStr).asJsonArray
                 for (i in 0 until arr.size()) {
                     savedCards.add(arr.get(i).asJsonObject)
                 }
-            } catch (_: Exception) { }
-        }
-        renderCards()
+            }
+            renderCards()
+        } catch (_: Exception) { renderCards() }
     }
 
     private fun renderContacts() {
@@ -295,9 +296,9 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
         }
 
         savedCards.forEachIndexed { index, card ->
-            val num = card.get("number")?.asString ?: ""
-            val brand = card.get("brand")?.asString ?: ""
-            val expiry = card.get("expiry")?.asString ?: ""
+            val num = card.safeString("number") ?: ""
+            val brand = card.safeString("brand") ?: ""
+            val expiry = card.safeString("expiry") ?: ""
             val last4 = if (num.length >= 4) num.takeLast(4) else num
 
             val row = LinearLayout(this).apply {
@@ -410,10 +411,17 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
         startActivityClearTask<LoginActivity>()
     }
 
+    override fun onReviewSubmitted() {
+        toast("Review submitted successfully!")
+        loadHistory()
+    }
+
     override fun onResume() {
         super.onResume()
-        presenter?.loadProfile()
-        loadHistory()
+        try {
+            presenter?.loadProfile()
+            loadHistory()
+        } catch (_: Exception) { }
     }
 
     private fun loadHistory() {
@@ -432,19 +440,25 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
                 override fun onFailure(call: retrofit2.Call<List<com.example.testapplication.features.listing.model.ListingDTO>>, t: Throwable) { }
             })
         } else {
-            // Load booking history
-            RetrofitClient.bookingApi.getBookingsByGuestEmail(email).enqueue(object : retrofit2.Callback<List<com.example.testapplication.features.booking.model.BookingDTO>> {
-                override fun onResponse(call: retrofit2.Call<List<com.example.testapplication.features.booking.model.BookingDTO>>, response: retrofit2.Response<List<com.example.testapplication.features.booking.model.BookingDTO>>) {
-                    if (response.isSuccessful && response.body() != null) {
-                        renderBookingHistory(response.body()!!)
-                    }
+            // Load booking history and reviewed bookings
+            RetrofitClient.listingApi.getReviewedBookings(email).enqueue(object : retrofit2.Callback<List<String>> {
+                override fun onResponse(call: retrofit2.Call<List<String>>, response1: retrofit2.Response<List<String>>) {
+                    val reviewed = if (response1.isSuccessful) response1.body() ?: emptyList() else emptyList()
+                    RetrofitClient.bookingApi.getBookingsByGuestEmail(email).enqueue(object : retrofit2.Callback<List<com.example.testapplication.features.booking.model.BookingDTO>> {
+                        override fun onResponse(call: retrofit2.Call<List<com.example.testapplication.features.booking.model.BookingDTO>>, response: retrofit2.Response<List<com.example.testapplication.features.booking.model.BookingDTO>>) {
+                            if (response.isSuccessful && response.body() != null) {
+                                renderBookingHistory(response.body()!!, reviewed)
+                            }
+                        }
+                        override fun onFailure(call: retrofit2.Call<List<com.example.testapplication.features.booking.model.BookingDTO>>, t: Throwable) { }
+                    })
                 }
-                override fun onFailure(call: retrofit2.Call<List<com.example.testapplication.features.booking.model.BookingDTO>>, t: Throwable) { }
+                override fun onFailure(call: retrofit2.Call<List<String>>, t: Throwable) { }
             })
         }
     }
 
-    private fun renderBookingHistory(bookings: List<com.example.testapplication.features.booking.model.BookingDTO>) {
+    private fun renderBookingHistory(bookings: List<com.example.testapplication.features.booking.model.BookingDTO>, reviewedListingIds: List<String>) {
         val llHistory = findViewById<LinearLayout>(R.id.llBookingHistory) ?: return
         val tvHistoryLabel = findViewById<TextView>(R.id.tvHistoryLabel) ?: return
         tvHistoryLabel.text = "📅 Booking History"
@@ -493,6 +507,22 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
             row.addView(tvDates)
             row.addView(tvInfo)
 
+            if (b.status == "ACCEPTED" && b.listing?.id != null && !reviewedListingIds.contains(b.listing?.id)) {
+                val btnReview = Button(this).apply {
+                    text = "Rate & Review"
+                    textSize = 12f
+                    isAllCaps = false
+                    setTextColor(getColor(R.color.lodgio_primary))
+                    setBackgroundResource(R.drawable.btn_outlined_bg)
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100).apply {
+                        topMargin = 16
+                    }
+                    setPadding(32, 0, 32, 0)
+                    setOnClickListener { showReviewDialog(b.listing?.id!!) }
+                }
+                row.addView(btnReview)
+            }
+
             // Divider
             val divider = View(this).apply {
                 layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1)
@@ -501,6 +531,31 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
             llHistory.addView(row)
             llHistory.addView(divider)
         }
+    }
+
+    private fun showReviewDialog(listingId: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_leave_review, null)
+        val dialog = android.app.AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        val ratingBar = dialogView.findViewById<android.widget.RatingBar>(R.id.ratingBar)
+        val etComment = dialogView.findViewById<EditText>(R.id.etReviewComment)
+        
+        dialogView.findViewById<Button>(R.id.btnCancelReview).setOnClickListener { dialog.dismiss() }
+        dialogView.findViewById<Button>(R.id.btnSubmitReview).setOnClickListener {
+            val comment = etComment.textString()
+            if (comment.isBlank()) {
+                toast("Please enter a comment")
+                return@setOnClickListener
+            }
+            val rating = ratingBar.rating.toInt()
+            presenter?.submitReview(listingId, rating, comment)
+            dialog.dismiss()
+        }
+        
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
     }
 
     private fun renderListingHistory(listings: List<com.example.testapplication.features.listing.model.ListingDTO>) {

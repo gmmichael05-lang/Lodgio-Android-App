@@ -11,11 +11,13 @@
 
     <!-- Property Icon -->
     <ImageView
+        android:id="@+id/ivListingImage"
         android:layout_width="@dimen/avatar_md"
         android:layout_height="@dimen/avatar_md"
         android:src="@drawable/ic_property"
         android:background="@color/lodgio_bg_surface"
         android:padding="@dimen/spacing_sm"
+        android:scaleType="centerCrop"
         android:contentDescription="Listing" />
 
     <!-- Info -->
@@ -53,6 +55,13 @@
             android:textColor="@color/lodgio_primary"
             android:layout_marginTop="@dimen/spacing_xs" />
     </LinearLayout>
+
+    <!-- Active Toggle -->
+    <Switch
+        android:id="@+id/swListingActive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_sm" />
 
     <!-- Delete Button -->
     <ImageView

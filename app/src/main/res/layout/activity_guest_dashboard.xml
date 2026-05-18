@@ -191,11 +191,18 @@
                     style="@style/LodgioSectionHeader"
                     android:layout_marginBottom="@dimen/spacing_md" />
 
-                <LinearLayout
-                    android:id="@+id/llTripsContainer"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    android:layout_height="300dp"
+                    android:background="@drawable/input_background"
+                    android:padding="@dimen/spacing_xs">
+                    
+                    <LinearLayout
+                        android:id="@+id/llTripsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </androidx.core.widget.NestedScrollView>
             </LinearLayout>
 
         </LinearLayout>

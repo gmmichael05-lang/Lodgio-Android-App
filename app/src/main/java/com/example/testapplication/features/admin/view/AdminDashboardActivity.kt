@@ -45,19 +45,25 @@ class AdminDashboardActivity : AppCompatActivity(), AdminContract.View {
         llUsers.removeAllViews()
         findViewById<TextView>(R.id.tvUserCount).text = "${users.size} users"
 
+        // Safe getter to handle JsonNull
+        fun JsonObject.safe(key: String): String? {
+            val el = this.get(key) ?: return null
+            return if (el.isJsonNull) null else try { el.asString } catch (_: Exception) { null }
+        }
+
         // Populate stats
-        val guests = users.count { it.get("role")?.asString == "GUEST" }
-        val hosts = users.count { it.get("role")?.asString == "HOST" }
+        val guests = users.count { it.safe("role") == "GUEST" }
+        val hosts = users.count { it.safe("role") == "HOST" }
         findViewById<TextView>(R.id.tvStatUsers).text = "${users.size}"
         findViewById<TextView>(R.id.tvStatGuests).text = "$guests"
         findViewById<TextView>(R.id.tvStatHosts).text = "$hosts"
 
         users.forEach { user ->
             val v = layoutInflater.inflate(R.layout.item_admin_user, llUsers, false)
-            val fullname = user.get("fullname")?.asString ?: "Unknown"
-            val role = user.get("role")?.asString ?: "GUEST"
+            val fullname = user.safe("fullname") ?: "Unknown"
+            val role = user.safe("role") ?: "GUEST"
             v.findViewById<TextView>(R.id.tvUserName).text = fullname
-            v.findViewById<TextView>(R.id.tvUserEmail).text = user.get("email")?.asString ?: ""
+            v.findViewById<TextView>(R.id.tvUserEmail).text = user.safe("email") ?: ""
             v.findViewById<TextView>(R.id.tvUserRole).text = role
 
             // Avatar initial
@@ -82,7 +88,7 @@ class AdminDashboardActivity : AppCompatActivity(), AdminContract.View {
             }
 
             v.findViewById<ImageView>(R.id.btnDeleteUser).setOnClickListener {
-                val uid = user.get("id")?.asString ?: return@setOnClickListener
+                val uid = user.safe("id") ?: return@setOnClickListener
                 AlertDialog.Builder(this)
                     .setTitle("Delete User")
                     .setMessage("Delete ${fullname}?")

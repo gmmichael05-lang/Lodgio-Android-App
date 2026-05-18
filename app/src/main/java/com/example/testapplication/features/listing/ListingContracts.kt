@@ -28,11 +28,13 @@ interface HostDashboardContract {
         fun showBookingRequests(requests: List<BookingDTO>)
         fun showError(message: String)
         fun onListingDeleted()
+        fun onListingToggled()
         fun onBookingStatusUpdated()
     }
     interface Presenter {
         fun loadHostData()
         fun deleteListing(id: String)
+        fun toggleListingActive(id: String)
         fun updateBookingStatus(id: String, status: String)
         fun onDestroy()
     }
@@ -44,11 +46,13 @@ interface ListingDetailContract {
         fun hideLoading()
         fun showListing(listing: ListingDTO)
         fun showBookedDates(dates: List<BookedDateRange>)
+        fun showReviews(summary: com.google.gson.JsonObject, reviews: List<com.google.gson.JsonObject>)
         fun showError(message: String)
     }
     interface Presenter {
         fun loadListing(id: String)
         fun loadBookedDates(listingId: String)
+        fun loadReviews(listingId: String)
         fun onDestroy()
     }
 }

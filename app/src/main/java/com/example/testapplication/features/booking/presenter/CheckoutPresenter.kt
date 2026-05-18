@@ -39,7 +39,8 @@ class CheckoutPresenter(
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 if (response.isSuccessful && response.body() != null) {
                     val user = response.body()!!
-                    val cardsStr = user.get("savedCards")?.asString ?: ""
+                    val cardsEl = user.get("savedCards")
+                    val cardsStr = if (cardsEl != null && !cardsEl.isJsonNull) try { cardsEl.asString } catch (_: Exception) { "" } else ""
                     if (cardsStr.isNotBlank()) {
                         try {
                             val cardsArray = JsonParser().parse(cardsStr).asJsonArray
@@ -47,10 +48,10 @@ class CheckoutPresenter(
                             for (i in 0 until cardsArray.size()) {
                                 val obj = cardsArray.get(i).asJsonObject
                                 val card = mutableMapOf<String, String>()
-                                card["label"] = obj.get("label")?.asString ?: ""
-                                card["number"] = obj.get("number")?.asString ?: ""
-                                card["expiry"] = obj.get("expiry")?.asString ?: ""
-                                card["brand"] = obj.get("brand")?.asString ?: ""
+                                card["label"] = try { obj.get("label")?.let { if (it.isJsonNull) "" else it.asString } ?: "" } catch (_: Exception) { "" }
+                                card["number"] = try { obj.get("number")?.let { if (it.isJsonNull) "" else it.asString } ?: "" } catch (_: Exception) { "" }
+                                card["expiry"] = try { obj.get("expiry")?.let { if (it.isJsonNull) "" else it.asString } ?: "" } catch (_: Exception) { "" }
+                                card["brand"] = try { obj.get("brand")?.let { if (it.isJsonNull) "" else it.asString } ?: "" } catch (_: Exception) { "" }
                                 cards.add(card)
                             }
                             view?.showSavedCards(cards)

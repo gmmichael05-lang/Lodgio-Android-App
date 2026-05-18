@@ -43,5 +43,24 @@ class ListingDetailPresenter(
         })
     }
 
+    override fun loadReviews(listingId: String) {
+        RetrofitClient.listingApi.getReviewSummary(listingId).enqueue(object : Callback<com.google.gson.JsonObject> {
+            override fun onResponse(call: Call<com.google.gson.JsonObject>, response: Response<com.google.gson.JsonObject>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val summary = response.body()!!
+                    RetrofitClient.listingApi.getReviewsForListing(listingId).enqueue(object : Callback<List<com.google.gson.JsonObject>> {
+                        override fun onResponse(call: Call<List<com.google.gson.JsonObject>>, response2: Response<List<com.google.gson.JsonObject>>) {
+                            if (response2.isSuccessful && response2.body() != null) {
+                                view?.showReviews(summary, response2.body()!!)
+                            }
+                        }
+                        override fun onFailure(call: Call<List<com.google.gson.JsonObject>>, t: Throwable) { }
+                    })
+                }
+            }
+            override fun onFailure(call: Call<com.google.gson.JsonObject>, t: Throwable) { }
+        })
+    }
+
     override fun onDestroy() { view = null }
 }

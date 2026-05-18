@@ -50,4 +50,53 @@ interface ListingApiService {
     // DELETE /api/listings/{id}
     @DELETE("api/listings/{id}")
     fun deleteListing(@Path("id") id: String): Call<Void>
+
+    // PUT /api/listings/{id}/toggle-active — pause/resume listing
+    @PUT("api/listings/{id}/toggle-active")
+    fun toggleListingActive(@Path("id") id: String): Call<Void>
+
+    // ── Favorites ──
+
+    // GET /api/favorites/{email} — get user's saved listings
+    @GET("api/favorites/{email}")
+    fun getFavorites(@Path("email") email: String): Call<List<ListingDTO>>
+
+    // GET /api/favorites/{email}/{listingId} — check if favorited
+    @GET("api/favorites/{email}/{listingId}")
+    fun isFavorited(
+        @Path("email") email: String,
+        @Path("listingId") listingId: String
+    ): Call<JsonObject>
+
+    // POST /api/favorites/{email}/{listingId} — add favorite
+    @POST("api/favorites/{email}/{listingId}")
+    fun addFavorite(
+        @Path("email") email: String,
+        @Path("listingId") listingId: String
+    ): Call<Void>
+
+    // DELETE /api/favorites/{email}/{listingId} — remove favorite
+    @DELETE("api/favorites/{email}/{listingId}")
+    fun removeFavorite(
+        @Path("email") email: String,
+        @Path("listingId") listingId: String
+    ): Call<Void>
+
+    // ── Reviews ──
+
+    // GET /api/reviews/listing/{listingId} — reviews for a listing
+    @GET("api/reviews/listing/{listingId}")
+    fun getReviewsForListing(@Path("listingId") listingId: String): Call<List<JsonObject>>
+
+    // GET /api/reviews/listing/{listingId}/summary — rating summary
+    @GET("api/reviews/listing/{listingId}/summary")
+    fun getReviewSummary(@Path("listingId") listingId: String): Call<JsonObject>
+
+    // POST /api/reviews — submit review
+    @POST("api/reviews")
+    fun submitReview(@Body payload: JsonObject): Call<JsonObject>
+
+    // GET /api/reviews/guest/{email}/reviewed-bookings — which bookings have been reviewed
+    @GET("api/reviews/guest/{email}/reviewed-bookings")
+    fun getReviewedBookings(@Path("email") email: String): Call<List<String>>
 }

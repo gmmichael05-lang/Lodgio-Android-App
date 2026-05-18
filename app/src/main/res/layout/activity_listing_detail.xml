@@ -53,6 +53,62 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_base">
 
+            <!-- ═══ Photo Gallery ═══ -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <ImageView
+                    android:id="@+id/ivMainImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:contentDescription="Main listing photo"
+                    android:visibility="gone" />
+
+                <!-- Fallback emoji for no image -->
+                <TextView
+                    android:id="@+id/tvNoImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:gravity="center"
+                    android:text="🏡"
+                    android:textSize="48sp" />
+            </FrameLayout>
+
+            <!-- Secondary images -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <ImageView
+                    android:id="@+id/ivImage2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:contentDescription="Photo 2"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivImage3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:contentDescription="Photo 3"
+                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:visibility="gone" />
+            </LinearLayout>
+
             <!-- Title -->
             <TextView
                 android:id="@+id/tvTitle"
@@ -110,15 +166,28 @@
                 android:padding="@dimen/spacing_md"
                 android:layout_marginBottom="@dimen/spacing_lg">
 
-                <TextView
-                    android:id="@+id/tvHostInitial"
+                <FrameLayout
                     android:layout_width="@dimen/avatar_md"
-                    android:layout_height="@dimen/avatar_md"
-                    android:background="@drawable/avatar_circle"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_title"
-                    android:textStyle="bold"
-                    android:textColor="@color/white" />
+                    android:layout_height="@dimen/avatar_md">
+
+                    <TextView
+                        android:id="@+id/tvHostInitial"
+                        android:layout_width="@dimen/avatar_md"
+                        android:layout_height="@dimen/avatar_md"
+                        android:background="@drawable/avatar_circle"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_title"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/ivHostAvatar"
+                        android:layout_width="@dimen/avatar_md"
+                        android:layout_height="@dimen/avatar_md"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Host photo"
+                        android:visibility="gone" />
+                </FrameLayout>
 
                 <TextView
                     android:id="@+id/tvHostName"
@@ -183,6 +252,45 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- ═══ Reviews & Ratings ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reviews &amp; Ratings"
+                    style="@style/LodgioSectionHeader" />
+
+                <TextView
+                    android:id="@+id/tvReviewSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="★ 0.0 (0 reviews)"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_lg" />
 
             <!-- Divider -->
             <View

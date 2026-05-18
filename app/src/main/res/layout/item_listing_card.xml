@@ -4,96 +4,113 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/card_background"
-    android:padding="@dimen/spacing_md"
     android:layout_margin="@dimen/spacing_xs"
-    android:elevation="@dimen/elevation_sm">
+    android:elevation="@dimen/elevation_sm"
+    android:clipChildren="true"
+    android:clipToPadding="false">
 
-    <!-- Property Type Badge -->
-    <TextView
-        android:id="@+id/tvListingType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/badge_guest"
-        android:paddingHorizontal="@dimen/spacing_sm"
-        android:paddingVertical="3dp"
-        android:textSize="@dimen/text_caption"
-        android:textStyle="bold"
-        android:textColor="@color/lodgio_guest_badge"
-        android:layout_marginBottom="@dimen/spacing_sm" />
-
-    <!-- Title -->
-    <TextView
-        android:id="@+id/tvListingTitle"
+    <!-- Property Image -->
+    <ImageView
+        android:id="@+id/ivListingImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/lodgio_text_primary"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:lineSpacingExtra="2dp"
-        android:layout_marginBottom="@dimen/spacing_xs" />
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_listing_placeholder"
+        android:contentDescription="Property photo" />
 
-    <!-- Location Row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/spacing_xs">
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
 
-        <ImageView
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:src="@drawable/ic_location"
-            android:contentDescription="Location" />
-
+        <!-- Property Type Badge -->
         <TextView
-            android:id="@+id/tvListingCity"
+            android:id="@+id/tvListingType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/lodgio_text_secondary"
-            android:layout_marginStart="@dimen/spacing_xs" />
-    </LinearLayout>
-
-    <!-- Beds/Baths -->
-    <TextView
-        android:id="@+id/tvBedsBaths"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_caption"
-        android:textColor="@color/lodgio_text_hint"
-        android:layout_marginBottom="@dimen/spacing_sm" />
-
-    <!-- Divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/lodgio_divider"
-        android:layout_marginBottom="@dimen/spacing_sm" />
-
-    <!-- Price -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tvListingPrice"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_subtitle"
-            android:textStyle="bold"
-            android:textColor="@color/lodgio_primary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="/night"
+            android:background="@drawable/badge_guest"
+            android:paddingHorizontal="@dimen/spacing_sm"
+            android:paddingVertical="3dp"
             android:textSize="@dimen/text_caption"
-            android:textColor="@color/lodgio_text_hint" />
+            android:textStyle="bold"
+            android:textColor="@color/lodgio_primary"
+            android:layout_marginBottom="@dimen/spacing_xs" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvListingTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/lodgio_text_primary"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginBottom="@dimen/spacing_xs" />
+
+        <!-- Location Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/spacing_xs">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_location"
+                android:contentDescription="Location" />
+
+            <TextView
+                android:id="@+id/tvListingCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/lodgio_text_secondary"
+                android:layout_marginStart="@dimen/spacing_xs" />
+        </LinearLayout>
+
+        <!-- Beds/Baths -->
+        <TextView
+            android:id="@+id/tvBedsBaths"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_caption"
+            android:textColor="@color/lodgio_text_hint"
+            android:layout_marginBottom="@dimen/spacing_sm" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/lodgio_divider"
+            android:layout_marginBottom="@dimen/spacing_sm" />
+
+        <!-- Price -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvListingPrice"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_subtitle"
+                android:textStyle="bold"
+                android:textColor="@color/lodgio_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/night"
+                android:textSize="@dimen/text_caption"
+                android:textColor="@color/lodgio_text_hint" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

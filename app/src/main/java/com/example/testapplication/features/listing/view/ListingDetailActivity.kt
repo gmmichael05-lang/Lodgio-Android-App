@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.testapplication.R
 import com.example.testapplication.core.extensions.*
 import com.example.testapplication.features.booking.model.BookedDateRange
@@ -93,6 +96,7 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
 
         presenter?.loadListing(listingId)
         presenter?.loadBookedDates(listingId)
+        presenter?.loadReviews(listingId)
     }
 
     private fun showDatePicker(isCheckIn: Boolean) {
@@ -168,6 +172,56 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
         listing.baths?.let { details.add("$it bath${if (it != 1) "s" else ""}") }
         findViewById<TextView>(R.id.tvDetails).text = details.joinToString(" · ")
 
+        // Load listing images with Glide
+        val images = listing.imageUrls?.split(",")?.map { it.trim() }?.filter { it.isNotBlank() } ?: emptyList()
+        val ivMainImage = findViewById<ImageView>(R.id.ivMainImage)
+        if (ivMainImage != null && images.isNotEmpty()) {
+            Glide.with(this)
+                .load(images[0])
+                .transform(CenterCrop(), RoundedCorners(32))
+                .placeholder(R.drawable.bg_listing_placeholder)
+                .error(R.drawable.bg_listing_placeholder)
+                .into(ivMainImage)
+            ivMainImage.visible()
+            findViewById<TextView>(R.id.tvNoImage)?.gone()
+        }
+
+        // Load secondary images if they exist
+        val ivImage2 = findViewById<ImageView>(R.id.ivImage2)
+        if (ivImage2 != null && images.size > 1) {
+            Glide.with(this)
+                .load(images[1])
+                .transform(CenterCrop(), RoundedCorners(24))
+                .placeholder(R.drawable.bg_listing_placeholder)
+                .into(ivImage2)
+            ivImage2.visible()
+        }
+
+        val ivImage3 = findViewById<ImageView>(R.id.ivImage3)
+        if (ivImage3 != null && images.size > 2) {
+            Glide.with(this)
+                .load(images[2])
+                .transform(CenterCrop(), RoundedCorners(24))
+                .placeholder(R.drawable.bg_listing_placeholder)
+                .into(ivImage3)
+            ivImage3.visible()
+        }
+
+        // Load host profile picture
+        val ivHostAvatar = findViewById<ImageView>(R.id.ivHostAvatar)
+        if (ivHostAvatar != null && !listing.host?.profilePictureUrl.isNullOrBlank()) {
+            Glide.with(this)
+                .load(listing.host?.profilePictureUrl)
+                .circleCrop()
+                .into(ivHostAvatar)
+            ivHostAvatar.visible()
+            findViewById<TextView>(R.id.tvHostInitial)?.gone()
+        } else {
+            // Host initial
+            val initial = listing.host?.fullname?.firstOrNull()?.uppercase() ?: "?"
+            findViewById<TextView>(R.id.tvHostInitial).text = initial
+        }
+
         // Amenities
         val llAmenities = findViewById<LinearLayout>(R.id.llAmenities)
         llAmenities.removeAllViews()
@@ -190,10 +244,6 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
             }
             llAmenities.addView(tv)
         }
-
-        // Host initial
-        val initial = listing.host?.fullname?.firstOrNull()?.uppercase() ?: "?"
-        findViewById<TextView>(R.id.tvHostInitial).text = initial
 
         // Set guest capacity hint
         findViewById<EditText>(R.id.etGuests).hint = "Guests (max ${listing.guestCapacity ?: "N/A"})"
@@ -226,6 +276,81 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
     override fun showError(message: String) {
         toast(message)
         finish()
+    }
+
+    override fun showReviews(summary: com.google.gson.JsonObject, reviews: List<com.google.gson.JsonObject>) {
+        val tvSummary = findViewById<TextView>(R.id.tvReviewSummary)
+        val llReviews = findViewById<LinearLayout>(R.id.llReviews)
+
+        val averageRating = summary.get("averageRating")?.asDouble ?: 0.0
+        val totalReviews = summary.get("totalReviews")?.asInt ?: 0
+        tvSummary.text = "★ ${String.format("%.1f", averageRating)} ($totalReviews reviews)"
+
+        llReviews.removeAllViews()
+        if (reviews.isEmpty()) {
+            val tv = TextView(this).apply {
+                text = "No reviews yet."
+                textSize = 14f
+                setTextColor(getColor(R.color.lodgio_text_hint))
+            }
+            llReviews.addView(tv)
+            return
+        }
+
+        reviews.forEach { r ->
+            val reviewerName = try { r.get("reviewerName")?.asString } catch (e: Exception) { "Guest" } ?: "Guest"
+            val rating = try { r.get("rating")?.asInt } catch (e: Exception) { 5 } ?: 5
+            val comment = try { r.get("comment")?.asString } catch (e: Exception) { "" } ?: ""
+            val createdAt = try { r.get("createdAt")?.asString?.substring(0, 10) } catch (e: Exception) { "" } ?: ""
+
+            val row = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(0, 16, 0, 16)
+            }
+            
+            val headerRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            val tvName = TextView(this).apply {
+                text = reviewerName
+                textSize = 14f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                setTextColor(getColor(R.color.lodgio_text_primary))
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            val tvRating = TextView(this).apply {
+                text = "★ $rating"
+                textSize = 13f
+                setTextColor(getColor(R.color.lodgio_primary))
+                setTypeface(null, android.graphics.Typeface.BOLD)
+            }
+            headerRow.addView(tvName)
+            headerRow.addView(tvRating)
+
+            val tvDate = TextView(this).apply {
+                text = createdAt
+                textSize = 11f
+                setTextColor(getColor(R.color.lodgio_text_hint))
+                setPadding(0, 4, 0, 8)
+            }
+
+            val tvComment = TextView(this).apply {
+                text = comment
+                textSize = 14f
+                setTextColor(getColor(R.color.lodgio_text_secondary))
+            }
+
+            row.addView(headerRow)
+            row.addView(tvDate)
+            row.addView(tvComment)
+
+            val divider = android.view.View(this).apply {
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1)
+                setBackgroundColor(getColor(R.color.lodgio_divider))
+                setPadding(0, 8, 0, 8)
+            }
+
+            llReviews.addView(row)
+            llReviews.addView(divider)
+        }
     }
 
     override fun onDestroy() {

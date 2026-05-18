@@ -49,4 +49,20 @@ dependencies {
     // Retrofit & Gson
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-}// Triggering refresh...
+
+    // OkHttp logging (for debugging network calls)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // Glide — image loading from URLs (Supabase Storage, property photos)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+
+    // SwipeRefreshLayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    // CardView
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+}

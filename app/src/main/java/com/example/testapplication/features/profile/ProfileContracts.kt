@@ -11,12 +11,14 @@ interface ProfileContract {
         fun onLogout()
         fun onContactsSaved()
         fun onCardsSaved()
+        fun onReviewSubmitted()
     }
     interface Presenter {
         fun loadProfile()
         fun logout()
         fun saveContacts(userId: String, contacts: String)
         fun saveCards(userId: String, cards: String)
+        fun submitReview(listingId: String, rating: Int, comment: String)
         fun onDestroy()
     }
 }

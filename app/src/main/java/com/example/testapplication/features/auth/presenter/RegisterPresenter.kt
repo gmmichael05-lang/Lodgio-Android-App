@@ -52,8 +52,10 @@ class RegisterPresenter(
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 if (response.isSuccessful && response.body() != null) {
                     val body = response.body()!!
-                    val userId = body.getAsJsonObject("user")?.get("id")?.asString
-                        ?: body.get("id")?.asString
+                    val userId = try {
+                        body.getAsJsonObject("user")?.get("id")?.let { if (it.isJsonNull) null else it.asString }
+                            ?: body.get("id")?.let { if (it.isJsonNull) null else it.asString }
+                    } catch (_: Exception) { null }
 
                     if (userId != null) {
                         saveToBackend(userId, email, fullname, role, mobileNumber)
