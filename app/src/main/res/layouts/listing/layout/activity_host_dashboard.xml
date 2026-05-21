@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lodgio_bg">
+
+    <!-- ═══ Premium Toolbar ═══ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/bg_gradient_primary"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/spacing_base"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Host Dashboard"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            android:letterSpacing="0.02" />
+
+        <ImageView
+            android:id="@+id/btnProfile"
+            android:layout_width="@dimen/avatar_sm"
+            android:layout_height="@dimen/avatar_sm"
+            android:src="@drawable/ic_profile"
+            android:background="@drawable/avatar_circle"
+            android:contentDescription="Profile"
+            android:padding="6dp" />
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_base">
+
+                <!-- Welcome -->
+                <TextView
+                    android:id="@+id/tvWelcomeName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome back, Host!"
+                    android:textSize="@dimen/text_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:letterSpacing="-0.02"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Manage your listings and bookings"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_text_secondary"
+                    android:layout_marginBottom="@dimen/spacing_lg" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+                <!-- Create Listing Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateListing"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="＋ Create New Listing"
+                    android:textSize="16sp"
+                    app:cornerRadius="14dp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/lodgio_primary"
+                    android:layout_marginBottom="@dimen/spacing_xl" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lodgio_divider"
+                    android:layout_marginBottom="@dimen/spacing_lg" />
+
+                <!-- ═══ Revenue Analytics Section ═══ -->
+                <LinearLayout
+                    android:id="@+id/llRevenueSection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/spacing_xl">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📊 Revenue Analytics"
+                        style="@style/LodgioSectionHeader"
+                        android:layout_marginBottom="@dimen/spacing_xs" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Track your earnings and booking performance."
+                        android:textSize="@dimen/text_body_sm"
+                        android:textColor="@color/lodgio_text_secondary"
+                        android:layout_marginBottom="@dimen/spacing_md" />
+
+                    <!-- Stat Cards Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/spacing_md">
+
+                        <!-- Total Revenue Card -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/btn_primary_bg"
+                            android:padding="@dimen/spacing_md"
+                            android:layout_marginEnd="@dimen/spacing_xs">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="💰 TOTAL REVENUE"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:letterSpacing="0.05"
+                                android:layout_marginBottom="@dimen/spacing_xs" />
+
+                            <TextView
+                                android:id="@+id/tvTotalRevenue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱0"
+                                android:textSize="@dimen/text_headline"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tvTotalBookings"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0 bookings"
+                                android:textSize="11sp"
+                                android:textColor="@color/lodgio_primary_lighter" />
+                        </LinearLayout>
+
+                        <!-- Avg Per Booking Card -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/btn_dark_bg"
+                            android:padding="@dimen/spacing_md"
+                            android:layout_marginStart="@dimen/spacing_xs">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="📈 AVG / BOOKING"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:letterSpacing="0.05"
+                                android:layout_marginBottom="@dimen/spacing_xs" />
+
+                            <TextView
+                                android:id="@+id/tvAvgBooking"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="₱0"
+                                android:textSize="@dimen/text_headline"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tvOccupancy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0% occupancy"
+                                android:textSize="11sp"
+                                android:textColor="@color/lodgio_text_hint" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Per-Listing Revenue Breakdown -->
+                    <LinearLayout
+                        android:id="@+id/llRevenueBreakdown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </LinearLayout>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lodgio_divider"
+                    android:layout_marginBottom="@dimen/spacing_lg" />
+
+                <!-- Booking Requests -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Booking Requests"
+                    style="@style/LodgioSectionHeader"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginBottom="@dimen/spacing_xl"
+                    android:background="@drawable/input_background"
+                    android:padding="@dimen/spacing_xs">
+                    
+                    <LinearLayout
+                        android:id="@+id/llBookingRequests"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </androidx.core.widget.NestedScrollView>
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lodgio_divider"
+                    android:layout_marginBottom="@dimen/spacing_lg" />
+
+                <!-- My Listings -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Listings"
+                    style="@style/LodgioSectionHeader"
+                    android:layout_marginBottom="@dimen/spacing_md" />
+
+                <LinearLayout
+                    android:id="@+id/llMyListings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

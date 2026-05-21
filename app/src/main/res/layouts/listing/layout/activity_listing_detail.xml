@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lodgio_bg">
+
+    <!-- Removed Solid Toolbar in favor of Full Bleed Hero Overlay -->
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/spacing_4xl"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ═══ Full Bleed Photo Header ═══ -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <ImageView
+                    android:id="@+id/ivMainImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:contentDescription="Main listing photo"
+                    android:visibility="gone" />
+
+                <!-- Fallback emoji for no image -->
+                <TextView
+                    android:id="@+id/tvNoImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:gravity="center"
+                    android:text="🏡"
+                    android:textSize="48sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/bg_scrim_dark"
+                    android:rotation="180" />
+
+                <!-- Top Controls Overlay -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="36dp"
+                    android:paddingHorizontal="24dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/btnBack"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_arrow_back"
+                        android:contentDescription="Back"
+                        android:padding="10dp"
+                        app:tint="@color/lodgio_text_primary"
+                        android:background="@drawable/bg_heart_circle" />
+
+                    <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/btnFavorite"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:src="@drawable/ic_favorite_border"
+                        android:contentDescription="Save to favorites"
+                        android:padding="10dp"
+                        android:background="@drawable/bg_heart_circle" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/spacing_base">
+
+            <!-- Secondary images -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <ImageView
+                    android:id="@+id/ivImage2"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:contentDescription="Photo 2"
+                    android:layout_marginEnd="@dimen/spacing_xs"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivImage3"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@drawable/bg_listing_placeholder"
+                    android:contentDescription="Photo 3"
+                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_headline"
+                android:textStyle="bold"
+                android:textColor="@color/lodgio_text_primary"
+                android:letterSpacing="-0.02"
+                android:layout_marginBottom="@dimen/spacing_xs" />
+
+            <!-- Location Row -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_location"
+                    android:contentDescription="Location" />
+
+                <TextView
+                    android:id="@+id/tvCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/lodgio_text_secondary"
+                    android:layout_marginStart="@dimen/spacing_xs" />
+            </LinearLayout>
+
+            <!-- Type Badge -->
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_guest"
+                android:paddingHorizontal="@dimen/spacing_md"
+                android:paddingVertical="@dimen/spacing_xs"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/lodgio_guest_badge"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Host Card -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@color/lodgio_bg_surface"
+                android:padding="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_lg">
+
+                <FrameLayout
+                    android:layout_width="@dimen/avatar_md"
+                    android:layout_height="@dimen/avatar_md">
+
+                    <TextView
+                        android:id="@+id/tvHostInitial"
+                        android:layout_width="@dimen/avatar_md"
+                        android:layout_height="@dimen/avatar_md"
+                        android:background="@drawable/avatar_circle"
+                        android:gravity="center"
+                        android:textSize="@dimen/text_title"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/ivHostAvatar"
+                        android:layout_width="@dimen/avatar_md"
+                        android:layout_height="@dimen/avatar_md"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Host photo"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvHostName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_md"
+                    android:textSize="@dimen/text_body"
+                    android:textColor="@color/lodgio_text_primary" />
+            </LinearLayout>
+
+            <!-- Quick Details -->
+            <TextView
+                android:id="@+id/tvDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_body"
+                android:textColor="@color/lodgio_text_secondary"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- About -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About this place"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/lodgio_text_secondary"
+                android:lineSpacingMultiplier="1.5"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Amenities -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amenities"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <LinearLayout
+                android:id="@+id/llAmenities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- ═══ Reviews & Ratings ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reviews &amp; Ratings"
+                    style="@style/LodgioSectionHeader" />
+
+                <TextView
+                    android:id="@+id/tvReviewSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="★ 0.0 (0 reviews)"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- ═══ Unavailable Dates ═══ -->
+            <TextView
+                android:id="@+id/tvBookedDatesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅 Unavailable Dates"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/llBookedDates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                android:visibility="gone" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- About -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About this place"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/lodgio_text_secondary"
+                android:lineSpacingMultiplier="1.5"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Amenities -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amenities"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm" />
+
+            <LinearLayout
+                android:id="@+id/llAmenities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_xl" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- ═══ Reviews & Ratings ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reviews &amp; Ratings"
+                    style="@style/LodgioSectionHeader" />
+
+                <TextView
+                    android:id="@+id/tvReviewSummary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="★ 0.0 (0 reviews)"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llReviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- ═══ Unavailable Dates ═══ -->
+            <TextView
+                android:id="@+id/tvBookedDatesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅 Unavailable Dates"
+                style="@style/LodgioSectionHeader"
+                android:layout_marginBottom="@dimen/spacing_sm"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/llBookedDates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_md"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                android:visibility="gone" />
+
+            <!-- Divider -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/lodgio_divider"
+                android:layout_marginBottom="@dimen/spacing_lg" />
+
+            <!-- ═══ Booking Card ═══ -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/spacing_lg"
+                android:elevation="@dimen/elevation_md">
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_headline"
+                    android:textStyle="bold"
+                    android:textColor="@color/lodgio_primary"
+                    android:layout_marginBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="per night"
+                    android:textSize="@dimen/text_body_sm"
+                    android:textColor="@color/lodgio_text_secondary"
+                    android:layout_marginBottom="@dimen/spacing_lg" />
+
+                <EditText
+                    android:id="@+id/etCheckIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_height"
+                    android:background="@drawable/input_background"
+                    android:hint="Check-in (YYYY-MM-DD)"
+                    android:textColorHint="@color/lodgio_text_hint"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <EditText
+                    android:id="@+id/etCheckOut"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_height"
+                    android:background="@drawable/input_background"
+                    android:hint="Check-out (YYYY-MM-DD)"
+                    android:textColorHint="@color/lodgio_text_hint"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <EditText
+                    android:id="@+id/etGuests"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_height"
+                    android:background="@drawable/input_background"
+                    android:hint="Number of guests"
+                    android:textColorHint="@color/lodgio_text_hint"
+                    android:textColor="@color/lodgio_text_primary"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    android:singleLine="true"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <!-- Price Summary (shown after date selection) -->
+                <TextView
+                    android:id="@+id/tvPriceSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/lodgio_primary"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/spacing_xs" />
+
+                <!-- Date Conflict Warning -->
+                <TextView
+                    android:id="@+id/tvDateConflict"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="@color/lodgio_error"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginBottom="@dimen/spacing_sm" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCheckAvailability"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="Book Now"
+                    android:textSize="16sp"
+                    app:cornerRadius="14dp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/lodgio_primary"
+                    android:layout_marginTop="@dimen/spacing_xl" />
+            </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -15,10 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="240dp">
 
+            <ImageView
+                android:id="@+id/ivHero"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_gradient_dark" />
+                android:background="@drawable/bg_scrim_dark" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,131 +150,142 @@
             </RadioGroup>
 
             <!-- Full Name -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Full Name"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body_sm"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/spacing_sm" />
-
-            <EditText
-                android:id="@+id/etName"
+            <!-- Full Name -->
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background"
-                android:hint="ex. Juan Dela Cruz"
-                android:textColorHint="@color/lodgio_text_hint"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body"
-                android:inputType="textPersonName"
-                android:singleLine="true"
-                android:layout_marginBottom="@dimen/spacing_base" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="@color/lodgio_primary"
+                android:hint="Full Name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:drawableStart="@drawable/ic_account"
+                    android:drawablePadding="12dp"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Mobile -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mobile Number"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body_sm"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/spacing_sm" />
-
-            <EditText
-                android:id="@+id/etMobile"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background"
-                android:hint="0912 345 6789"
-                android:textColorHint="@color/lodgio_text_hint"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body"
-                android:inputType="phone"
-                android:singleLine="true"
-                android:layout_marginBottom="@dimen/spacing_base" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="@color/lodgio_primary"
+                android:hint="Mobile Number">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="12dp"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Email -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body_sm"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/spacing_sm" />
-
-            <EditText
-                android:id="@+id/etEmail"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background"
-                android:hint="you@example.com"
-                android:textColorHint="@color/lodgio_text_hint"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body"
-                android:inputType="textEmailAddress"
-                android:singleLine="true"
-                android:layout_marginBottom="@dimen/spacing_base" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="@color/lodgio_primary"
+                android:hint="Email address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:drawableStart="@drawable/ic_account"
+                    android:drawablePadding="12dp"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Password -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body_sm"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/spacing_sm" />
-
-            <EditText
-                android:id="@+id/etPassword"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background"
-                android:hint="Create a password"
-                android:textColorHint="@color/lodgio_text_hint"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:layout_marginBottom="@dimen/spacing_base" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_lg"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="@color/lodgio_primary"
+                app:endIconMode="password_toggle"
+                android:hint="Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:drawableStart="@drawable/ic_search" 
+                    android:drawablePadding="12dp"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Confirm Password -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Confirm Password"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body_sm"
-                android:textStyle="bold"
-                android:layout_marginBottom="@dimen/spacing_sm" />
-
-            <EditText
-                android:id="@+id/etPasswordConfirm"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:background="@drawable/input_background"
-                android:hint="Re-enter password"
-                android:textColorHint="@color/lodgio_text_hint"
-                android:textColor="@color/lodgio_text_primary"
-                android:textSize="@dimen/text_body"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:layout_marginBottom="@dimen/spacing_xl" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xl"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxStrokeColor="@color/lodgio_primary"
+                app:endIconMode="password_toggle"
+                android:hint="Confirm Password">
 
-            <Button
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPasswordConfirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:drawableStart="@drawable/ic_search" 
+                    android:drawablePadding="12dp"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRegister"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/btn_height"
-                android:background="@drawable/btn_primary_bg"
+                android:layout_height="56dp"
                 android:text="Create Account"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_subtitle"
-                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:cornerRadius="14dp"
                 android:textStyle="bold"
-                android:letterSpacing="0.02"
+                app:backgroundTint="@color/lodgio_primary"
                 android:layout_marginBottom="@dimen/spacing_base" />
 
             <ProgressBar

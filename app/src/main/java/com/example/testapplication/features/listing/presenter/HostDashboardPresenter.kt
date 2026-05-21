@@ -22,25 +22,28 @@ class HostDashboardPresenter(
         // Load host's listings
         RetrofitClient.listingApi.getListingsByHostEmail(email).enqueue(object : Callback<List<ListingDTO>> {
             override fun onResponse(call: Call<List<ListingDTO>>, response: Response<List<ListingDTO>>) {
-                if (response.isSuccessful) view?.showListings(response.body() ?: emptyList())
+                val listings = if (response.isSuccessful) response.body() ?: emptyList() else emptyList()
+                view?.showListings(listings)
+
+                // After listings loaded, load bookings (needs listings for revenue analytics)
+                RetrofitClient.bookingApi.getBookingsByHostEmail(email).enqueue(object : Callback<List<BookingDTO>> {
+                    override fun onResponse(call: Call<List<BookingDTO>>, response: Response<List<BookingDTO>>) {
+                        view?.hideLoading()
+                        if (response.isSuccessful) {
+                            val all = response.body() ?: emptyList()
+                            val active = all.filter { it.status == "PENDING" || it.status == "ACCEPTED" }
+                            view?.showBookingRequests(active)
+                            // Pass all bookings + listings for revenue analytics (matches web app pattern)
+                            view?.showRevenueAnalytics(all, listings)
+                        }
+                    }
+                    override fun onFailure(call: Call<List<BookingDTO>>, t: Throwable) {
+                        view?.hideLoading()
+                    }
+                })
             }
             override fun onFailure(call: Call<List<ListingDTO>>, t: Throwable) {
                 view?.showError("Failed to load listings")
-            }
-        })
-
-        // Load booking requests for host
-        RetrofitClient.bookingApi.getBookingsByHostEmail(email).enqueue(object : Callback<List<BookingDTO>> {
-            override fun onResponse(call: Call<List<BookingDTO>>, response: Response<List<BookingDTO>>) {
-                view?.hideLoading()
-                if (response.isSuccessful) {
-                    val all = response.body() ?: emptyList()
-                    val active = all.filter { it.status == "PENDING" || it.status == "ACCEPTED" }
-                    view?.showBookingRequests(active)
-                }
-            }
-            override fun onFailure(call: Call<List<BookingDTO>>, t: Throwable) {
-                view?.hideLoading()
             }
         })
     }
@@ -57,11 +60,12 @@ class HostDashboardPresenter(
     }
 
     override fun toggleListingActive(id: String) {
-        RetrofitClient.listingApi.toggleListingActive(id).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+        RetrofitClient.listingApi.toggleListingActive(id).enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 view?.onListingToggled()
+                loadHostData() // Reload data to sync UI — matches web app behavior
             }
-            override fun onFailure(call: Call<Void>, t: Throwable) {
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 view?.showError("Failed to toggle listing status")
             }
         })

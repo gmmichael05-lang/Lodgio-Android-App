@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/card_background"
-    android:orientation="horizontal"
-    android:padding="@dimen/spacing_base"
-    android:gravity="center_vertical"
-    android:layout_marginBottom="@dimen/spacing_sm"
-    android:elevation="@dimen/elevation_sm">
+    android:layout_marginHorizontal="@dimen/spacing_sm"
+    android:layout_marginVertical="@dimen/spacing_xs"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_base"
+        android:gravity="center_vertical">
 
     <!-- Property Icon -->
-    <ImageView
-        android:id="@+id/ivListingImage"
-        android:layout_width="@dimen/avatar_md"
-        android:layout_height="@dimen/avatar_md"
-        android:src="@drawable/ic_property"
-        android:background="@color/lodgio_bg_surface"
-        android:padding="@dimen/spacing_sm"
-        android:scaleType="centerCrop"
-        android:contentDescription="Listing" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivListingImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_property"
+            android:background="@color/lodgio_bg_surface"
+            app:shapeAppearanceOverlay="@style/RoundedCornerImage"
+            android:scaleType="centerCrop"
+            android:contentDescription="Listing" />
 
     <!-- Info -->
     <LinearLayout
@@ -63,12 +71,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/spacing_sm" />
 
-    <!-- Delete Button -->
-    <ImageView
-        android:id="@+id/btnDeleteListing"
-        android:layout_width="@dimen/icon_lg"
-        android:layout_height="@dimen/icon_lg"
-        android:src="@drawable/ic_delete"
-        android:contentDescription="Delete"
-        android:padding="@dimen/spacing_xs" />
-</LinearLayout>
+        <!-- Delete Button -->
+        <ImageView
+            android:id="@+id/btnDeleteListing"
+            android:layout_width="@dimen/icon_lg"
+            android:layout_height="@dimen/icon_lg"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="Delete"
+            android:padding="@dimen/spacing_xs" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

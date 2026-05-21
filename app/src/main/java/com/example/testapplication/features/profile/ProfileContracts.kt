@@ -18,7 +18,7 @@ interface ProfileContract {
         fun logout()
         fun saveContacts(userId: String, contacts: String)
         fun saveCards(userId: String, cards: String)
-        fun submitReview(listingId: String, rating: Int, comment: String)
+        fun submitReview(listingId: String, bookingId: String, rating: Int, comment: String)
         fun onDestroy()
     }
 }

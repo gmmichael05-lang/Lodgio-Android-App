@@ -7,6 +7,8 @@ import com.example.testapplication.R
 import com.example.testapplication.core.extensions.*
 import com.example.testapplication.features.auth.RegisterContract
 import com.example.testapplication.features.auth.presenter.RegisterPresenter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 /**
  * Register Activity — View layer of MVP.
@@ -29,7 +31,6 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         val etPasswordConfirm = findViewById<EditText>(R.id.etPasswordConfirm)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val btnGoToLogin = findViewById<TextView>(R.id.btnGoToLogin)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
         btnRegister.setOnClickListener {
             val role = if (rgRole.checkedRadioButtonId == R.id.rbHost) "HOST" else "GUEST"
@@ -44,6 +45,13 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         }
 
         btnGoToLogin.setOnClickListener { finish() }
+
+        // Load premium hero image
+        val ivHero = findViewById<ImageView>(R.id.ivHero)
+        Glide.with(this)
+            .load("https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1600&auto=format&fit=crop")
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(ivHero)
     }
 
     override fun showLoading() {

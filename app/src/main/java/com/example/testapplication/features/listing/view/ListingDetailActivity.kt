@@ -36,6 +36,11 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
 
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
+        // Favorite toggle button — matches web app's Save/Unsave
+        findViewById<ImageView>(R.id.btnFavorite).setOnClickListener {
+            presenter?.toggleFavorite(listingId)
+        }
+
         // Date pickers with validation
         findViewById<EditText>(R.id.etCheckIn).apply {
             isFocusable = false
@@ -97,6 +102,7 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
         presenter?.loadListing(listingId)
         presenter?.loadBookedDates(listingId)
         presenter?.loadReviews(listingId)
+        presenter?.checkFavorite(listingId)
     }
 
     private fun showDatePicker(isCheckIn: Boolean) {
@@ -278,12 +284,21 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
         finish()
     }
 
+    override fun showFavoriteStatus(isFavorited: Boolean) {
+        val btnFav = findViewById<ImageView>(R.id.btnFavorite)
+        if (isFavorited) {
+            btnFav.setImageResource(R.drawable.ic_favorite_filled)
+        } else {
+            btnFav.setImageResource(R.drawable.ic_favorite_border)
+        }
+    }
+
     override fun showReviews(summary: com.google.gson.JsonObject, reviews: List<com.google.gson.JsonObject>) {
         val tvSummary = findViewById<TextView>(R.id.tvReviewSummary)
         val llReviews = findViewById<LinearLayout>(R.id.llReviews)
 
         val averageRating = summary.get("averageRating")?.asDouble ?: 0.0
-        val totalReviews = summary.get("totalReviews")?.asInt ?: 0
+        val totalReviews = summary.get("reviewCount")?.asInt ?: 0
         tvSummary.text = "★ ${String.format("%.1f", averageRating)} ($totalReviews reviews)"
 
         llReviews.removeAllViews()
@@ -298,7 +313,9 @@ class ListingDetailActivity : AppCompatActivity(), ListingDetailContract.View {
         }
 
         reviews.forEach { r ->
-            val reviewerName = try { r.get("reviewerName")?.asString } catch (e: Exception) { "Guest" } ?: "Guest"
+            // Backend returns ReviewDTO with nested guest: { fullname, profilePictureUrl }
+            val guestObj = try { r.getAsJsonObject("guest") } catch (e: Exception) { null }
+            val reviewerName = try { guestObj?.get("fullname")?.asString } catch (e: Exception) { "Guest" } ?: "Guest"
             val rating = try { r.get("rating")?.asInt } catch (e: Exception) { 5 } ?: 5
             val comment = try { r.get("comment")?.asString } catch (e: Exception) { "" } ?: ""
             val createdAt = try { r.get("createdAt")?.asString?.substring(0, 10) } catch (e: Exception) { "" } ?: ""

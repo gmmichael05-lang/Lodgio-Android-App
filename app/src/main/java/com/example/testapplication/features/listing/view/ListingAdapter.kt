@@ -14,11 +14,18 @@ import com.example.testapplication.features.listing.model.ListingDTO
 
 class ListingAdapter(
     private var items: List<ListingDTO> = emptyList(),
-    private val onItemClick: (ListingDTO) -> Unit
+    private val onItemClick: (ListingDTO) -> Unit,
+    private val onFavoriteClick: ((ListingDTO) -> Unit)? = null,
+    private var favoriteIds: Set<String> = emptySet()
 ) : RecyclerView.Adapter<ListingAdapter.ViewHolder>() {
 
     fun updateData(newItems: List<ListingDTO>) {
         items = newItems
+        notifyDataSetChanged()
+    }
+
+    fun updateFavorites(ids: Set<String>) {
+        favoriteIds = ids
         notifyDataSetChanged()
     }
 
@@ -40,6 +47,7 @@ class ListingAdapter(
         private val tvType: TextView = itemView.findViewById(R.id.tvListingType)
         private val tvBedsBaths: TextView = itemView.findViewById(R.id.tvBedsBaths)
         private val ivListingImage: ImageView? = itemView.findViewById(R.id.ivListingImage)
+        private val ivFavoriteHeart: ImageView? = itemView.findViewById(R.id.ivFavoriteHeart)
 
         fun bind(listing: ListingDTO) {
             tvTitle.text = listing.title ?: "Untitled"
@@ -67,7 +75,22 @@ class ListingAdapter(
                 }
             }
 
+            // Favorite heart icon — matches web app's heart toggle on listing cards
+            if (ivFavoriteHeart != null && onFavoriteClick != null) {
+                val isFav = favoriteIds.contains(listing.id)
+                ivFavoriteHeart.setImageResource(
+                    if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+                )
+                ivFavoriteHeart.visibility = View.VISIBLE
+                ivFavoriteHeart.setOnClickListener {
+                    onFavoriteClick.invoke(listing)
+                }
+            } else {
+                ivFavoriteHeart?.visibility = View.GONE
+            }
+
             itemView.setOnClickListener { onItemClick(listing) }
         }
     }
 }
+

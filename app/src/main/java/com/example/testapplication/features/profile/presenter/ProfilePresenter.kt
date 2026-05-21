@@ -78,17 +78,18 @@ class ProfilePresenter(
         view?.onLogout()
     }
 
-    override fun submitReview(listingId: String, rating: Int, comment: String) {
+    override fun submitReview(listingId: String, bookingId: String, rating: Int, comment: String) {
         val email = session.getEmail() ?: return
-        val name = session.getFullname() ?: "Guest"
 
-        val payload = JsonObject().apply {
-            addProperty("listingId", listingId)
-            addProperty("reviewerEmail", email)
-            addProperty("reviewerName", name)
-            addProperty("rating", rating)
-            addProperty("comment", comment)
-        }
+        // Payload must match backend ReviewController.createReview() expectations:
+        // required: email, listingId, bookingId, rating, comment
+        val payload = com.example.testapplication.features.listing.api.ReviewPayload(
+            email = email,
+            listingId = listingId,
+            bookingId = bookingId,
+            rating = rating,
+            comment = comment
+        )
 
         view?.showLoading()
         RetrofitClient.listingApi.submitReview(payload).enqueue(object : Callback<JsonObject> {
@@ -97,7 +98,12 @@ class ProfilePresenter(
                 if (response.isSuccessful) {
                     view?.onReviewSubmitted()
                 } else {
-                    view?.showError("Failed to submit review")
+                    val code = response.code()
+                    if (code == 400) {
+                        view?.showError("You may have already reviewed this booking.")
+                    } else {
+                        view?.showError("Failed to submit review (Code $code)")
+                    }
                 }
             }
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {

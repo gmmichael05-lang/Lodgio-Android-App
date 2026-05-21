@@ -11,6 +11,8 @@ import com.example.testapplication.features.auth.presenter.LoginPresenter
 import com.example.testapplication.features.listing.view.GuestDashboardActivity
 import com.example.testapplication.features.listing.view.HostDashboardActivity
 import android.widget.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 /**
  * Login Activity — View layer of MVP.
@@ -58,6 +60,13 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         btnGoToRegister.setOnClickListener {
             startActivity<RegisterActivity>()
         }
+
+        // Load premium hero image
+        val ivHero = findViewById<ImageView>(R.id.ivHero)
+        Glide.with(this)
+            .load("https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1600&auto=format&fit=crop")
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(ivHero)
     }
 
     override fun showLoading() {

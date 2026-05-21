@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@drawable/card_background"
     android:layout_margin="@dimen/spacing_xs"
-    android:elevation="@dimen/elevation_sm"
-    android:clipChildren="true"
-    android:clipToPadding="false">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white"
+    app:strokeWidth="0dp"
+    android:clickable="true"
+    android:focusable="true">
 
-    <!-- Property Image -->
-    <ImageView
-        android:id="@+id/ivListingImage"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/bg_listing_placeholder"
-        android:contentDescription="Property photo" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <!-- Property Image with Favorite Overlay -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+        <ImageView
+            android:id="@+id/ivListingImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_listing_placeholder"
+            android:contentDescription="Property photo" />
+
+        <ImageView
+            android:id="@+id/ivFavoriteHeart"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_favorite_border"
+            android:contentDescription="Favorite"
+            android:padding="4dp"
+            android:background="@drawable/bg_heart_circle" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -112,5 +135,6 @@
                 android:textSize="@dimen/text_caption"
                 android:textColor="@color/lodgio_text_hint" />
         </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

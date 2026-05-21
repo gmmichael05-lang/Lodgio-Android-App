@@ -443,7 +443,11 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
             // Load booking history and reviewed bookings
             RetrofitClient.listingApi.getReviewedBookings(email).enqueue(object : retrofit2.Callback<List<String>> {
                 override fun onResponse(call: retrofit2.Call<List<String>>, response1: retrofit2.Response<List<String>>) {
-                    val reviewed = if (response1.isSuccessful) response1.body() ?: emptyList() else emptyList()
+                    val reviewed = if (response1.isSuccessful) {
+                        response1.body()?.filterNotNull()?.map { it.lowercase() } ?: emptyList()
+                    } else {
+                        emptyList()
+                    }
                     RetrofitClient.bookingApi.getBookingsByGuestEmail(email).enqueue(object : retrofit2.Callback<List<com.example.testapplication.features.booking.model.BookingDTO>> {
                         override fun onResponse(call: retrofit2.Call<List<com.example.testapplication.features.booking.model.BookingDTO>>, response: retrofit2.Response<List<com.example.testapplication.features.booking.model.BookingDTO>>) {
                             if (response.isSuccessful && response.body() != null) {
@@ -507,7 +511,7 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
             row.addView(tvDates)
             row.addView(tvInfo)
 
-            if (b.status == "ACCEPTED" && b.listing?.id != null && !reviewedListingIds.contains(b.listing?.id)) {
+            if (b.status == "ACCEPTED" && b.listing?.id != null && b.id != null && !reviewedListingIds.contains(b.id!!.lowercase())) {
                 val btnReview = Button(this).apply {
                     text = "Rate & Review"
                     textSize = 12f
@@ -518,7 +522,7 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
                         topMargin = 16
                     }
                     setPadding(32, 0, 32, 0)
-                    setOnClickListener { showReviewDialog(b.listing?.id!!) }
+                    setOnClickListener { showReviewDialog(b.listing.id, b.id) }
                 }
                 row.addView(btnReview)
             }
@@ -533,8 +537,12 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
         }
     }
 
-    private fun showReviewDialog(listingId: String) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_leave_review, null)
+    private fun showReviewDialog(listingId: String, bookingId: String) {
+        if (listingId.isBlank() || bookingId.isBlank()) {
+            Toast.makeText(this, "Invalid booking data for review.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_leave_review, null)
         val dialog = android.app.AlertDialog.Builder(this)
             .setView(dialogView)
             .create()
@@ -550,7 +558,7 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View {
                 return@setOnClickListener
             }
             val rating = ratingBar.rating.toInt()
-            presenter?.submitReview(listingId, rating, comment)
+            presenter?.submitReview(listingId, bookingId, rating, comment)
             dialog.dismiss()
         }
         

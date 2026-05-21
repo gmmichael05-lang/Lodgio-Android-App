@@ -30,6 +30,20 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        getByName("main") {
+            res.setSrcDirs(listOf(
+                "src/main/res/layouts/auth",
+                "src/main/res/layouts/listing",
+                "src/main/res/layouts/booking",
+                "src/main/res/layouts/profile",
+                "src/main/res/layouts/admin",
+                "src/main/res/layouts/core",
+                "src/main/res/common"
+            ))
+        }
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }

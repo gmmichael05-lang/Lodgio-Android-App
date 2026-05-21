@@ -18,6 +18,7 @@ class AdminDashboardActivity : AppCompatActivity(), AdminContract.View {
     private var presenter: AdminContract.Presenter? = null
     private lateinit var llUsers: LinearLayout
     private lateinit var llListings: LinearLayout
+    private lateinit var swipeRefresh: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +36,21 @@ class AdminDashboardActivity : AppCompatActivity(), AdminContract.View {
             startActivityClearTask<LoginActivity>()
         }
 
+        swipeRefresh = findViewById(R.id.swipeRefresh)
+        swipeRefresh.setOnRefreshListener {
+            presenter?.loadAdminData()
+        }
+
         presenter?.loadAdminData()
     }
 
     override fun showLoading() { findViewById<ProgressBar>(R.id.progressBar).visible() }
-    override fun hideLoading() { findViewById<ProgressBar>(R.id.progressBar).gone() }
+    override fun hideLoading() {
+        findViewById<ProgressBar>(R.id.progressBar).gone()
+        if (::swipeRefresh.isInitialized) {
+            swipeRefresh.isRefreshing = false
+        }
+    }
 
     override fun showUsers(users: List<JsonObject>) {
         llUsers.removeAllViews()

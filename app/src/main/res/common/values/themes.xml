@@ -71,4 +71,10 @@
         <item name="android:paddingStart">@dimen/spacing_base</item>
         <item name="android:paddingEnd">@dimen/spacing_base</item>
     </style>
+
+    <!-- ShapeableImageView Styles -->
+    <style name="RoundedCornerImage">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
 </resources>

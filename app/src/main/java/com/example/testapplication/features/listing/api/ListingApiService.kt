@@ -53,7 +53,7 @@ interface ListingApiService {
 
     // PUT /api/listings/{id}/toggle-active — pause/resume listing
     @PUT("api/listings/{id}/toggle-active")
-    fun toggleListingActive(@Path("id") id: String): Call<Void>
+    fun toggleListingActive(@Path("id") id: String): Call<JsonObject>
 
     // ── Favorites ──
 
@@ -94,9 +94,17 @@ interface ListingApiService {
 
     // POST /api/reviews — submit review
     @POST("api/reviews")
-    fun submitReview(@Body payload: JsonObject): Call<JsonObject>
+    fun submitReview(@Body payload: ReviewPayload): Call<JsonObject>
 
     // GET /api/reviews/guest/{email}/reviewed-bookings — which bookings have been reviewed
     @GET("api/reviews/guest/{email}/reviewed-bookings")
     fun getReviewedBookings(@Path("email") email: String): Call<List<String>>
 }
+
+data class ReviewPayload(
+    val email: String,
+    val listingId: String,
+    val bookingId: String,
+    val rating: Int,
+    val comment: String
+)
